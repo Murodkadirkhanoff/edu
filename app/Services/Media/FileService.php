@@ -19,7 +19,10 @@ class FileService implements FileServiceInterface
         string       $pathPrefix = ''
     ): File
     {
-        $storedPath = $uploadedFile->store($pathPrefix, $disk);
+        $storedPath = $uploadedFile->store(
+            $pathPrefix,
+            $disk
+        );
 
         return File::create([
             'path' => $storedPath,

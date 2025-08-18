@@ -18,6 +18,7 @@ use App\Models\VideoContent;
 use App\Services\Instructor\LessonService;
 use App\Services\Media\FileService;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -53,10 +54,12 @@ class CourseLessonController extends Controller
 
         if ($request->hasFile('video_content')) {
             $this->fileService->upload(
-                $request->file('video_content'),
+                uploadedFile: $request->file('video_content'),
                 type: FileType::LESSON_VIDEO->value,
                 fileable: $lesson,
+                disk: 'wasabi',
                 pathPrefix: FilePrefix::LESSON_VIDEO->value
+
             );
         }
 

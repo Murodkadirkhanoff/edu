@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Foundation\Aplication;
+use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +14,10 @@ return Application::configure(basePath: dirname(__DIR__))
         using: function () {
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
+
+            Route::middleware('api') // 👈 API-мидлварь
+            ->prefix('api')      // 👈 Префикс
+            ->group(base_path('routes/api.php'));
 
             Route::middleware(['web','auth', 'role:instructor'])
                 ->prefix('instructor')

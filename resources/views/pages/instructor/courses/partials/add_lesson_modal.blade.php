@@ -1,9 +1,11 @@
 <!-- resources/views/instructor/lessons/create.blade.php -->
 
 <!-- Модальное окно -->
-<div class="modal fade" id="createLessonModal" tabindex="-1" aria-labelledby="createLessonModalLabel" aria-hidden="true">
+<div class="modal fade" id="createLessonModal" tabindex="-1" aria-labelledby="createLessonModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog modal-lg">
-        <form action="{{ route('instructor.lessons.create', $course->id) }}" method="POST" enctype="multipart/form-data" class="modal-content">
+        <form action="{{ route('instructor.lessons.create', $course->id) }}" method="POST" enctype="multipart/form-data"
+              class="modal-content">
             @csrf
             <div class="modal-header">
                 <h5 class="modal-title" id="createLessonModalLabel">Янги дарс қўшиш</h5>
@@ -20,7 +22,6 @@
                     placeholder="Сарлавхани киритинг"
                     class="mb-2"
                 />
-
 
 
                 <div id="lesson_price">
@@ -55,6 +56,8 @@
                 />
 
 
+                {{--                <div id="uppy"></div>--}}
+
 
                 <div class="mb-3 d-none" id="videoFields">
                     <x-forms.file
@@ -75,7 +78,6 @@
 
                     />
                 </div>
-
 
 
                 <div class="mb-3 mt-8">
@@ -115,7 +117,6 @@
         modal.show();
     }
 </script>
-
 
 
 <script>
