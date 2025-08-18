@@ -29,7 +29,7 @@ class File extends Model
         'original_name', 'extension', 'mime_type', 'file_size',
         'description', 'expires_at',
         'fileable_type', 'fileable_id',
-        'user_id', 'uploaded_by'
+        'user_id', 'uploaded_by', 'duration'
     ];
 
     protected $dates = ['expires_at'];

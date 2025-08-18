@@ -50,6 +50,7 @@
                 <span class="mb-0">Қоралама холатдан ташқари барча холатлардаги тахрирлаш курсни модерациядан қайта ўтказишга олиб келади</span>
             </div>
 
+
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-12">
                     <!-- Card -->
@@ -141,8 +142,6 @@
                                                                                     <div
                                                                                         class="d-flex align-items-center">
                                                                                         {{-- Вложенные файлы --}}
-
-
                                                                                         @if ($lesson->isVideo())
                                                                                             <a href="javascript:void(0)"
                                                                                                class="me-1 text-inherit"

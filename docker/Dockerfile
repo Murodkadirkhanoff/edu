@@ -3,7 +3,7 @@ FROM php:8.4-fpm
 RUN usermod -u 1000 www-data
 
 RUN apt-get update && apt-get install -y \
-    git curl zip unzip libpq-dev libzip-dev \
+    git curl zip unzip libpq-dev libzip-dev ffmpeg \
     && docker-php-ext-install pdo pdo_pgsql zip
 
 COPY docker/php.ini /usr/local/etc/php/conf.d/custom.ini
@@ -17,10 +17,5 @@ WORKDIR /var/www/html
 # Только если не используешь volume
 # COPY . .
 
-# Права на storage и cache можно оставить
 RUN mkdir -p storage bootstrap/cache \
     && chown -R www-data:www-data storage bootstrap/cache
-
-# Убрал composer install
-
-# RUN npm ci && npm run build  # если нужно

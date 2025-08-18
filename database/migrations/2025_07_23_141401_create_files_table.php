@@ -23,7 +23,7 @@ return new class extends Migration {
             $table->string('extension')->nullable();
             $table->string('mime_type')->nullable();
             $table->unsignedBigInteger('file_size')->nullable();
-            $table->unsignedBigInteger('duration')->nullable();
+            $table->unsignedBigInteger('duration')->nullable(); //seconds
             $table->timestamp('expires_at')->nullable();
 
             $table->foreignId('user_id')->nullable()->constrained('users.users')->nullOnDelete(); // sertifikat user va course ga biriktiriladi

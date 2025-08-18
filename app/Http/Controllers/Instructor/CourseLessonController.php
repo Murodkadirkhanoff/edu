@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Instructor;
 use App\Contracts\Services\FileServiceInterface;
 use App\Enums\FilePrefix;
 use App\Enums\FileType;
+use App\Enums\LessonStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCourseRequest;
+use App\Jobs\ProcessLessonVideo;
 use App\Models\Course;
 use App\Models\CourseModule;
 use App\Models\FileContent;
@@ -53,14 +55,14 @@ class CourseLessonController extends Controller
         $lesson->save();
 
         if ($request->hasFile('video_content')) {
-            $this->fileService->upload(
-                uploadedFile: $request->file('video_content'),
-                type: FileType::LESSON_VIDEO->value,
-                fileable: $lesson,
-                disk: 'wasabi',
-                pathPrefix: FilePrefix::LESSON_VIDEO->value
 
-            );
+            $file = $request->file('video_content');
+            // Save locally first
+            $localPath = $file->store('tmp', 'local');
+            $lesson->update([
+                'status' => LessonStatus::PROCESSING->value,
+            ]);
+            ProcessLessonVideo::dispatch($lesson->id, $localPath);
         }
 
         if ($request->hasFile('attachments')) {

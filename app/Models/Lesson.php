@@ -24,7 +24,8 @@ class Lesson extends Model
         'sort_order',
         'is_free',
         'type',
-        'text_content'
+        'text_content',
+        'status'
     ];
 
 

@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->longText('text_content')
                 ->nullable();
             $table->smallInteger('type');
+            $table->smallInteger('status')->default(\App\Enums\LessonStatus::PENDING->value); // pending, processing, ready
             $table->timestamps();
         });
     }
