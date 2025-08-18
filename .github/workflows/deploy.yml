@@ -1,0 +1,42 @@
+name: Deploy via Git Pull and Docker Rebuild
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /var/www/chashma.uz
+
+            echo "📥 Pull latest code"
+            if [ ! -d ".git" ]; then
+              git clone -b main git@github.com:Murodkadirkhanoff/edu.git .
+            else
+              git pull origin main
+            fi
+
+            echo "🛠 Rebuilding containers..."
+            docker compose down
+            docker compose up -d --build
+
+            echo "📦 Installing composer dependencies..."
+            docker exec laravel-app composer install --no-dev --optimize-autoloader
+
+            echo "🧹 Clearing caches..."
+            docker exec laravel-app php artisan config:clear
+            docker exec laravel-app php artisan view:clear
+            docker exec laravel-app php artisan route:clear
+
+            echo "⚙️ Running migrations..."
+            docker exec laravel-app php artisan migrate --force
