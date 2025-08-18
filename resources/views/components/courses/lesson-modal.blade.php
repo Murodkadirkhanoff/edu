@@ -15,6 +15,7 @@
                     <video id="lesson-video" class="plyr w-100 d-none"
                            style="max-height: 80vh; border-radius: 8px; object-fit: contain" controls></video>
 
+
                     {{-- Текст --}}
                     <div id="lesson-text" class="d-none">
                         <div id="lesson-text-content" class="p-2"
