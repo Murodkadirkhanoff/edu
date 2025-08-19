@@ -16,6 +16,8 @@
     :name="$name"
     :label="$label"
     :required="$required"
+    :labelCols="$labelCols ?? 'col-sm-4'"
+    :inputCols="$inputCols ?? 'col-sm-8'"
 >
     {{-- hidden-поле, чтобы при «off» тоже пришёл 0 --}}
     <input type="hidden" name="{{ $name }}" value="0">

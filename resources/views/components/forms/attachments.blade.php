@@ -21,6 +21,7 @@
     :inputCols="$inputCols ?? 'col-sm-8'"
 >
     <input
+        multiple
         type="file"
         name="{{ $name }}"
         id="{{ $fieldId }}"
@@ -54,33 +55,3 @@
     <div class="invalid-feedback d-block">{{ $message }}</div>
     @enderror
 </x-forms.group>
-
-@once
-    @push('scripts')
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                document.querySelectorAll('input[data-preview-target]').forEach(input => {
-                    input.addEventListener('change', () => {
-                        const file = input.files?.[0];
-                        if (!file) return;
-
-                        // Если файл не изображение — выходим
-                        if (!file.type.startsWith('image/')) {
-                            return;
-                        }
-
-                        const preview = document.getElementById(input.dataset.previewTarget);
-                        if (!preview) return;
-
-                        const reader = new FileReader();
-                        reader.onload = e => {
-                            preview.src = e.target.result;
-                            preview.style.display = 'block';
-                        };
-                        reader.readAsDataURL(file);
-                    });
-                });
-            });
-        </script>
-    @endpush
-@endonce

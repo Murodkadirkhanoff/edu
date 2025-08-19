@@ -16,9 +16,23 @@ class FileService implements FileServiceInterface
         ?object      $fileable = null,
         ?int         $userId = null,
         string       $disk = 'local',
-        string       $pathPrefix = ''
+        string       $pathPrefix = '',
+        bool         $replaceExisting = false,
     ): File
     {
+
+
+        if($replaceExisting){
+            $files = File::where('type', $type)
+                ->whereMorphedTo('fileable', $fileable)
+                ->get();
+            foreach ($files as $file){
+                Storage::disk($file->disk)->delete($file->path);
+                $file->delete();
+            }
+        }
+
+
         $storedPath = $uploadedFile->store(
             $pathPrefix,
             $disk

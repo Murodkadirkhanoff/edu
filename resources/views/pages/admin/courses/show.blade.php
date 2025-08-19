@@ -200,8 +200,7 @@
 
                                                                             @if ($lesson->isText())
                                                                                 @php
-                                                                                    $content = optional(optional($lesson->lesson_content)->contentable)->content ?? '';
-                                                                                    $encoded = base64_encode($content);
+                                                                                    $encoded = base64_encode($lesson->text_content);
                                                                                 @endphp
                                                                                 <a href="javascript:void(0)"
                                                                                    data-lesson-id="{{ $lesson->id }}"
@@ -235,7 +234,7 @@
                                 <div class="border rounded-3 p-4 d-flex flex-column gap-5">
                                     <div class="d-flex flex-row align-items-center gap-3">
                                         <div class="position-relative">
-                                            <img src="{{$course->instructor->avatar()}}" alt="avatar"
+                                            <img src="{{$course->instructor->avatar}}" alt="avatar"
                                                  class="rounded-circle avatar-xl"/>
                                             <a href="#!" class="position-absolute mt-7 ms-n4" data-bs-toggle="tooltip"
                                                data-placement="top" title="Verifed">

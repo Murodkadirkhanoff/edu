@@ -79,55 +79,59 @@ class CourseLessonController extends Controller
         return redirect()->back()->with('success', 'Lesson created successfully.');
     }
 
-    public function stream($lessonId)
+    public function stream($lessonId, Request $request)
     {
         $lesson = Lesson::find($lessonId);
         // Проверка доступа (например, пользователь купил курс)
 //        if (!auth()->user()->canView($lesson)) {
 //            abort(403);
 //        }
-        $path = Storage::disk()->path($lesson->video->path);
-
-        if (!file_exists($path)) {
-            abort(405);
+        $disk = Storage::disk('wasabi');
+        if (!$disk->exists($lesson->video->path)) {
+            abort(404);
         }
 
-        $mime = mime_content_type($path);
-        $size = filesize($path);
+
+
+        // Получаем stream из Wasabi
+        $stream = $disk->readStream($lesson->video->path);
+        $filesize = $disk->size($lesson->video->path);
+
         $start = 0;
-        $length = $size;
+        $length = $filesize;
+        $status = 200;
+        $headers = [
+            'Content-Type' => 'video/mp4',
+            'Accept-Ranges' => 'bytes',
+        ];
 
-        // Обработка range-запроса
-        if (request()->header('Range')) {
-            preg_match('/bytes=(\d+)-(\d+)?/', request()->header('Range'), $matches);
-            $start = intval($matches[1]);
-            $end = isset($matches[2]) ? intval($matches[2]) : $size - 1;
-            $length = $end - $start + 1;
-
-            $headers = [
-                'Content-Type' => $mime,
-                'Content-Length' => $length,
-                'Content-Range' => "bytes $start-$end/$size",
-                'Accept-Ranges' => 'bytes',
-            ];
-
-            $responseCode = 206;
-        } else {
-            $headers = [
-                'Content-Type' => $mime,
-                'Content-Length' => $size,
-                'Accept-Ranges' => 'bytes',
-            ];
-
-            $responseCode = 200;
+        if ($request->headers->has('Range')) {
+            [$param, $range] = explode('=', $request->header('Range'), 2);
+            if ($param === 'bytes') {
+                [$start, $end] = explode('-', $range);
+                $start = intval($start);
+                $end = $end !== "" ? intval($end) : $filesize - 1;
+                $length = $end - $start + 1;
+                $status = 206;
+                $headers['Content-Range'] = "bytes {$start}-{$end}/{$filesize}";
+                $headers['Content-Length'] = $length;
+            }
         }
 
-        return new StreamedResponse(function () use ($path, $start, $length) {
-            $handle = fopen($path, 'rb');
-            fseek($handle, $start);
-            echo fread($handle, $length);
-            fclose($handle);
-        }, $responseCode, $headers);
+        return response()->stream(function () use ($stream, $start, $length) {
+            fseek($stream, $start);
+            $buffer = 1024 * 8;
+            $bytesLeft = $length;
+
+            while ($bytesLeft > 0 && !feof($stream)) {
+                $chunk = fread($stream, min($buffer, $bytesLeft));
+                echo $chunk;
+                flush();
+                $bytesLeft -= strlen($chunk);
+            }
+
+            fclose($stream);
+        }, $status, $headers);
     }
 
     public function delete($lessonId)

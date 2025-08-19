@@ -81,7 +81,7 @@
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center gap-2">
-                                            <img src="{{auth()->user()->avatar()}}"
+                                            <img src="{{auth()->user()->avatar}}"
                                                  class="rounded-circle avatar-xs"
                                                  alt="">
                                             <h5 class="mb-0">{{ $course->instructor->full_name }}</h5>

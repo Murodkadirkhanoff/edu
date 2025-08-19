@@ -83,12 +83,12 @@
                     <span class="navbar-header">Аккаунт созламалари</span>
 
                     <ul class="list-unstyled mb-0">
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link" href="../pages/profile-edit.html">--}}
-{{--                                <i class="fe fe-settings nav-icon"></i>--}}
-{{--                                Edit Profile--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('profile')}}">
+                                <i class="fe fe-settings nav-icon"></i>
+                                Профилни тахрирлаш
+                            </a>
+                        </li>
 {{--                        <li class="nav-item">--}}
 {{--                            <a class="nav-link" href="../pages/security.html">--}}
 {{--                                <i class="fe fe-user nav-icon"></i>--}}

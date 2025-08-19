@@ -118,7 +118,7 @@
                             </div>
                             <div class="d-flex justify-content-between">
                                 <div class="d-flex align-items-center">
-                                    <img src="{{$course->instructor->avatar()}}" class="rounded-circle avatar-md"
+                                    <img src="{{$course->instructor->avatar}" class="rounded-circle avatar-md"
                                          alt="avatar"/>
                                     <div class="ms-2 lh-1">
                                         <h4 class="mb-1">{{$course->instructor->full_name}}</h4>

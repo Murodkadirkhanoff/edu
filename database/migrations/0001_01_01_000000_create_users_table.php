@@ -17,12 +17,16 @@ return new class extends Migration {
             $table->string('email')->nullable()->unique();
             $table->string('username')->nullable()->unique();
             $table->string('phone_number')->unique();
-            $table->string('avatar')->nullable();
             $table->string('otp_code')->nullable();
             $table->timestamp('otp_expires_at')->nullable();
             $table->boolean('is_verified')->default(false);
+            $table->boolean('is_instructor_verified')->default(false);
 
             $table->string('telegram_id')->nullable()->unique();
+
+            // PROFILE
+            $table->string('specialization')->nullable();
+            $table->text('biography')->nullable();
 
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

@@ -113,116 +113,177 @@
                                                                     @foreach($module->lessons as $lesson)
                                                                         <div
                                                                             class="list-group-item rounded px-3 text-nowrap mb-1 lesson-item"
+                                                                            id="{{$lesson->title}}"
                                                                             data-lesson-id="{{ $lesson->id }}">
                                                                             <div
                                                                                 class="d-flex align-items-center justify-content-between">
-                                                                                <i class="fe
-                                                                                 @if($lesson->type === \App\Enums\LessonType::VIDEO_CONTENT->value) fe-video
-                                                                                 @else fe-file-text @endif
-                                                                                 me-2 fs-5"></i>
-
-                                                                                {{-- Блок с заголовком и ценой --}}
-                                                                                <div class="flex-grow-1">
-                                                                                    {{-- Только сам заголовок кликабелен --}}
+                                                                                <h5 class="mb-0 text-truncate">
                                                                                     <a href="#" class="text-inherit">
-                                                                                        <h5 class="mb-1 text-truncate">{{ $lesson->title }}</h5>
+                                                                                        <i class="fe fe-menu me-1 align-middle"></i>
+                                                                                        <span
+                                                                                            class="align-middle">{{$lesson->title}}</span>
+                                                                                    </a>
+                                                                                </h5>
+                                                                                <div>
+                                                                                    <a href="#"
+                                                                                       class="me-1 text-inherit"
+                                                                                       data-bs-toggle="tooltip"
+                                                                                       data-placement="top"
+                                                                                       title="Edit">
+                                                                                        <i class="fe fe-edit fs-6"></i>
+                                                                                    </a>
+                                                                                    <a href="{{route('instructor.lessons.delete', $lesson->id)}}"
+                                                                                       class="me-1 text-inherit"
+                                                                                       data-bs-toggle="tooltip"
+                                                                                       data-placement="top"
+                                                                                       title="Delete"
+                                                                                       onclick="return confirm('Вы уверены, что хотите удалить урок «{{ addslashes($lesson->title) }}»?');"
+                                                                                    >
+                                                                                        <i class="fe fe-trash-2 fs-6"></i>
                                                                                     </a>
 
-                                                                                    {{-- Цена под заголовком --}}
-                                                                                    @if($course->is_lesson_purchase_available)
-                                                                                        <div class="small text-muted">
-                                                                                            {{$lesson->formatted_price}}
-                                                                                        </div>
-                                                                                    @endif
+                                                                                    <a href="#" class="text-inherit"
+                                                                                       data-bs-toggle="collapse"
+                                                                                       data-bs-target="#collapsedLesson{{$lesson->id}}"
+                                                                                       aria-expanded="false"
+                                                                                       aria-controls="collapsedLesson{{$lesson->id}}">
+                                                                                        <span class="chevron-arrow"><i
+                                                                                                class="fe fe-chevron-down"></i></span>
+                                                                                    </a>
                                                                                 </div>
-                                                                                <div>
+                                                                            </div>
+                                                                            <div id="collapsedLesson{{$lesson->id}}"
+                                                                                 class="collapse"
+                                                                                 aria-labelledby="{{$lesson->title}}"
+                                                                                 data-bs-parent="#courseList">
 
 
-                                                                                    {{-- Правая часть: вложения и действия --}}
-                                                                                    <div
-                                                                                        class="d-flex align-items-center">
-                                                                                        {{-- Вложенные файлы --}}
+                                                                                <!-- Card body -->
+                                                                                <div class="card-body">
+                                                                                    <!-- List inline -->
+                                                                                    <ul class="mb-0 list-inline">
+
+                                                                                        <li class="list-inline-item">
+                                                                                            @if ($lesson->isVideo())
+                                                                                                <i class="bi bi-play-circle align-baseline me-1 text-secondary"></i>
+                                                                                                <span>{{ $lesson->video->duration ?? 0 }} секунд</span>
+                                                                                            @else
+                                                                                                <i class="bi bi-file-text align-baseline me-1 text-secondary"></i>
+                                                                                                <span>12 min to read</span>
+                                                                                            @endif
+                                                                                        </li>
+
                                                                                         @if ($lesson->isVideo())
-                                                                                            <a href="javascript:void(0)"
-                                                                                               class="me-1 text-inherit"
-                                                                                               onclick="playVideo({{ $lesson->id }}, 'video')"
-                                                                                               data-bs-toggle="tooltip"
-                                                                                               data-placement="top"
-                                                                                               title="Кўриш">
-                                                                                                <i class="fe fe-eye fs-6"></i>
-                                                                                            </a>
+                                                                                            <li class="list-inline-item">
+                                                                                                <span
+                                                                                                    class="badge bg-{{ $lesson->status_color }}-soft">{{$lesson->status_text}}</span>
+                                                                                            </li>
                                                                                         @endif
+                                                                                    </ul>
+                                                                                </div>
 
-                                                                                        @if ($lesson->isText())
-                                                                                            @php
-                                                                                                $encoded = base64_encode( $lesson->text_content);
-                                                                                            @endphp
-                                                                                            <a href="javascript:void(0)"
-                                                                                               class="me-1 text-inherit"
-                                                                                               data-lesson-id="{{ $lesson->id }}"
-                                                                                               data-lesson-type="text"
-                                                                                               data-lesson-content-base64="{{ $encoded }}"
-                                                                                               onclick="playFromElement(this)"
-                                                                                               data-bs-toggle="tooltip"
-                                                                                               title="Кўриш">
-                                                                                                <i class="fe fe-eye fs-6"></i>
-                                                                                            </a>
-                                                                                        @endif
-                                                                                        {{--                                                                                        <a href="#"--}}
-                                                                                        {{--                                                                                           class="btn-edit-lesson text-inherit me-2"--}}
-                                                                                        {{--                                                                                           data-lesson='@json($lesson)'--}}
-                                                                                        {{--                                                                                           data-action="{{ route('instructor.courses.update_lesson', $lesson) }}"--}}
-                                                                                        {{--                                                                                           title="Редактировать урок">--}}
-                                                                                        {{--                                                                                            <i class="fe fe-edit fs-6"></i>--}}
-                                                                                        {{--                                                                                        </a>--}}
-                                                                                        <a href="{{route('instructor.lessons.delete', $lesson->id)}}"
-                                                                                           class="ms-2 text-inherit"
-                                                                                           data-bs-toggle="tooltip"
-                                                                                           data-placement="top"
-                                                                                           title="Ўчириш"
-                                                                                           onclick="return confirm('Вы уверены, что хотите удалить урок «{{ addslashes($lesson->title) }}»?');"
-                                                                                        >
-                                                                                            <i class="fe fe-trash-2 fs-6"></i>
-                                                                                        </a>
+                                                                                <div class="card-footer">
+                                                                                    <div
+                                                                                        class="row align-items-center g-0">
+                                                                                        <div class="col">
 
-                                                                                        @if($lesson->attachments->isNotEmpty())
-                                                                                            <div class="ms-2 dropdown">
+                                                                                            @if ($lesson->isVideo())
                                                                                                 <a
-                                                                                                    href="#"
-                                                                                                    class="text-inherit d-flex align-items-center"
-                                                                                                    id="attachmentsDropdown{{ $lesson->id }}"
-                                                                                                    data-bs-toggle="dropdown"
-                                                                                                    aria-expanded="false"
-                                                                                                    title="Бириктирилган файллар ({{ $lesson->attachments->count() }})"
+                                                                                                    href="javascript:void(0)"
+                                                                                                    onclick="openLessonModal({{ $lesson->id }}, 'video')"
                                                                                                 >
-                                                                                                    <i class="fe fe-paperclip fs-6"></i>
-                                                                                                    <span
-                                                                                                        class="badge bg-secondary ms-1">{{ $lesson->attachments->count() }}</span>
+                                                                                                    Ko'rib chiqish
+                                                                                                    <span>
+                                                                                                        <svg
+                                                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                                                            width="20"
+                                                                                                            height="20"
+                                                                                                            fill="currentColor"
+                                                                                                            class="bi bi-arrow-right-short"
+                                                                                                            viewBox="0 0 16 16">
+                                                                                                            <path
+                                                                                                                fill-rule="evenodd"
+                                                                                                                d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"></path>
+                                                                                                        </svg>
+                                                                                                    </span>
                                                                                                 </a>
-                                                                                                <ul class="dropdown-menu dropdown-menu-end"
-                                                                                                    aria-labelledby="attachmentsDropdown{{ $lesson->id }}">
-                                                                                                    @foreach($lesson->attachments as $file)
-                                                                                                        <li>
-                                                                                                            <a class="dropdown-item"
-                                                                                                               href="{{ route('files.download', $file->id) }}">
-                                                                                                                <i class="fe fe-file-text me-1"></i>
-                                                                                                                {{ $file->original_name }}
-                                                                                                            </a>
-                                                                                                        </li>
-                                                                                                    @endforeach
-                                                                                                </ul>
-                                                                                            </div>
-                                                                                        @endif
+                                                                                            @else
+                                                                                                @php
+                                                                                                    $encoded = base64_encode($lesson->text_content);
+                                                                                                @endphp
+                                                                                                <a
+                                                                                                    href="javascript:void(0)"
+                                                                                                    data-lesson-id="{{ $lesson->id }}"
+                                                                                                    data-lesson-type="text"
+                                                                                                    data-lesson-content-base64="{{ $encoded }}"
+                                                                                                    onclick="openLessonFromElement(this)"
+                                                                                                >
+                                                                                                    Ko'rib chiqish
+                                                                                                    <span>
+                                                                                                        <svg
+                                                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                                                            width="20"
+                                                                                                            height="20"
+                                                                                                            fill="currentColor"
+                                                                                                            class="bi bi-arrow-right-short"
+                                                                                                            viewBox="0 0 16 16">
+                                                                                                            <path
+                                                                                                                fill-rule="evenodd"
+                                                                                                                d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"></path>
+                                                                                                        </svg>
+                                                                                                    </span>
+
+                                                                                                </a>
+                                                                                            @endif
+                                                                                        </div>
+
+
+                                                                                        <div class="col-auto">
+                                                                                            @if($lesson->attachments->isNotEmpty())
+                                                                                                <div class="col-auto">
+                                                                                                    <div
+                                                                                                        class="dropdown">
+                                                                                                        <a href="#"
+                                                                                                           data-bs-toggle="dropdown"
+                                                                                                           aria-haspopup="true"
+                                                                                                           aria-expanded="false"
+                                                                                                           class=" btn-link">
+
+                                                                                                            Biriktirilgan
+                                                                                                            fayllar
+                                                                                                            ( {{ $lesson->attachments->count() }}
+                                                                                                            )
+                                                                                                            <i class="fe fe-chevron-down"></i>
+                                                                                                        </a>
+                                                                                                        <div
+                                                                                                            class="dropdown-menu"
+                                                                                                            aria-labelledby="dropdownMenuButton">
+                                                                                                            @foreach($lesson->attachments as $file)
+                                                                                                                <li>
+                                                                                                                    <a class="dropdown-item"
+                                                                                                                       href="{{ route('files.download', $file->id) }}">
+                                                                                                                        <i class="fe fe-file-text me-1"></i>
+                                                                                                                        {{ $file->original_name }}
+                                                                                                                    </a>
+                                                                                                                </li>
+                                                                                                            @endforeach
+
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            @endif
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
+
                                                                     @endforeach
 
                                                                 </div>
                                                             </div>
 
-                                                            <button onclick="openLessonModal({{ $module->id }})"
+                                                            <button onclick="openAddLessonModal({{ $module->id }})"
                                                                     class="btn btn-outline-primary btn-sm mt-3">
                                                                 + Дарс қўшиш
                                                             </button>
@@ -282,26 +343,8 @@
         />
     </x-forms.modal>
     <!-- Add Module Modal -->
-    <!-- Modal для видео (только один) -->
-    <div class="modal fade" id="videoModal" tabindex="-1" style="max-width: 90%;" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content" style="max-height: 90vh; overflow: hidden;">
-                <div class="modal-header">
-                    <h5 class="modal-title">Дарсни кўриш</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Ёпиш"></button>
-                </div>
-                <div class="modal-body" style="overflow-y: auto;">
-                    <video id="lesson-video" class="plyr w-100"
-                           style="max-height: 70vh; border-radius: 8px; object-fit: contain" controls></video>
 
-                    <div id="lesson-text" class="d-none">
-                        <div id="lesson-text-content" class="p-2"
-                             style="white-space: pre-line; font-size: 1.1rem;"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <x-courses.lesson-modal title="asd"/>
     @include('pages.instructor.courses.partials.add_lesson_modal')
 
 
@@ -415,78 +458,6 @@
                     });
                 });
             });
-        </script>
-
-
-        <script>
-
-
-            let player = null;
-
-            function playFromElement(el) {
-                const id = el.dataset.lessonId;
-                const type = el.dataset.lessonType;
-                const base64Content = el.dataset.lessonContentBase64;
-                const content = base64Content ? atob(base64Content) : null;
-
-                playVideo(id, type, content);
-            }
-
-            function playVideo(lessonId, type, textContent = null) {
-                const video = document.getElementById('lesson-video');
-                const textContainer = document.getElementById('lesson-text');
-                const textContentDiv = document.getElementById('lesson-text-content');
-
-                video.classList.add('d-none');
-                textContainer.classList.add('d-none');
-                if (window.player) {
-                    window.player.destroy();
-                    window.player = null;
-                }
-
-                if (type === 'video') {
-                    video.innerHTML = '';
-                    const streamUrl = `/lessons/${lessonId}/stream`;
-                    const source = document.createElement('source');
-                    source.src = streamUrl;
-                    source.type = 'video/mp4';
-                    video.appendChild(source);
-                    video.load();
-
-                    setTimeout(() => {
-                        window.player = new Plyr(video, {/* config */});
-                        video.classList.remove('d-none');
-                    }, 100);
-                } else if (type === 'text') {
-                    textContentDiv.innerHTML = textContent || '<p>Нет контента</p>';
-                    textContainer.classList.remove('d-none');
-                }
-
-                const modal = new bootstrap.Modal(document.getElementById('videoModal'));
-                modal.show();
-            }
-
-
-            document.addEventListener('DOMContentLoaded', function () {
-                const modalEl = document.getElementById('videoModal');
-
-                modalEl.addEventListener('hidden.bs.modal', function () {
-                    const video = document.getElementById('lesson-video');
-
-                    // Остановить воспроизведение
-                    if (window.player) {
-                        window.player.pause();
-                        window.player.stop(); // если хочешь сбросить
-                        window.player.destroy();
-                        window.player = null;
-                    }
-
-                    // Полностью сбросить тег video
-                    video.innerHTML = '';
-                });
-            });
-
-
         </script>
 
     @endpush

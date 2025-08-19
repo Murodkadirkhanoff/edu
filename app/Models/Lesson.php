@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Enums\CourseStatus;
 use App\Enums\FileType;
+use App\Enums\LessonStatus;
 use App\Enums\LessonType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -70,6 +72,16 @@ class Lesson extends Model
             }
         }
 
+    }
+
+    public function getStatusTextAttribute(): string
+    {
+        return LessonStatus::from($this->status)->title();
+    }
+
+    public function getStatusColorAttribute(): string
+    {
+        return LessonStatus::from($this->status)->color();
     }
 
 }

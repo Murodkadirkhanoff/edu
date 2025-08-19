@@ -25,4 +25,8 @@ Route::get('categories/{category}', [CategoryController::class, 'show'])->name('
 Route::get('courses/{course}', [\App\Http\Controllers\Common\CourseController::class, 'show'])->name('courses.show');
 
 Route::post('/telegram/webhook', [\App\Http\Controllers\Auth\TelegramController::class, 'handleWebhook']);
-Route::any('profile', [\App\Http\Controllers\Common\ProfileController::class, 'profile'])->name('profile');
+Route::any('profile', [\App\Http\Controllers\Common\ProfileController::class, 'profile'])->name('profile')->middleware(['auth', 'web']);
+
+
+Route::post('avatar/upload', [\App\Http\Controllers\Common\ProfileController::class, 'uploadAvatar'])->name('avatar.upload');
+Route::delete('avatar/delete', [\App\Http\Controllers\Common\ProfileController::class, 'deleteAvatar'])->name('avatar.delete');

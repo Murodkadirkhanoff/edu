@@ -3,9 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\FileType;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -29,7 +32,8 @@ class User extends Authenticatable
         'phone_number',
         'otp_code',
         'otp_expires_at',
-        'telegram_id'
+        'telegram_id',
+        'is_instructor_verified'
     ];
 
     /**
@@ -70,13 +74,23 @@ class User extends Authenticatable
 
     public function getFullNameAttribute(): string
     {
-        $first = $this->first_name   ?? '';
-        $last  = $this->last_name    ?? '';
+        $first = $this->first_name ?? '';
+        $last = $this->last_name ?? '';
         return trim("{$first} {$last}");
     }
 
     public function avatar()
     {
-        return 'https://img.freepik.com/premium-photo/memoji-emoji-handsome-smiling-man-white-background_826801-6987.jpg?semt=ais_hybrid&w=740&q=80';
+        return $this->morphOne(File::class, 'fileable')->where('type', FileType::USER_AVATAR->value)->latest();
+    }
+
+    public function getAvatarUrlAttribute()
+    {
+        if ($this->avatar == null) {
+            return Storage::disk('public')->url('common/avatar.png');
+        }
+
+        // Если хочешь отдать через route (secure download)
+        return route('files.show', $this->avatar->id);
     }
 }

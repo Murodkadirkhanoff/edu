@@ -3,7 +3,7 @@
 <!-- Модальное окно -->
 <div class="modal fade" id="createLessonModal" tabindex="-1" aria-labelledby="createLessonModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <form action="{{ route('instructor.lessons.create', $course->id) }}" method="POST" enctype="multipart/form-data"
               class="modal-content">
             @csrf
@@ -21,6 +21,8 @@
                     required
                     placeholder="Сарлавхани киритинг"
                     class="mb-2"
+                    label-cols="col-3"
+                    input-cols="col-9"
                 />
 
 
@@ -33,6 +35,8 @@
                         placeholder="Move File…"
                         class="mb-2 currency-input"
                         value="{{ number_format($course->lesson_price_minor, 0, '.', ' ') }}"
+                        label-cols="col-3"
+                        input-cols="col-9"
                     />
                 </div>
 
@@ -40,6 +44,8 @@
                     id="is_free"
                     name="is_free"
                     label="Дарсни бупул қилиш"
+                    label-cols="col-3"
+                    input-cols="col-9"
                 />
 
                 <x-forms.select
@@ -53,6 +59,8 @@
                     placeholder="Дарс тури"
                     required
                     id="contentTypeSelect"
+                    label-cols="col-3"
+                    input-cols="col-9"
                 />
 
 
@@ -62,28 +70,43 @@
                 <div class="mb-3 d-none" id="videoFields">
                     <x-forms.file
                         name="video_content"
-                        label="Urok"
+                        label="Видеони юкланг"
                         helpText="Видеони юкланг"
                         accept="video/*"
+                        label-cols="col-3"
+                        input-cols="col-9"
                     >
                     </x-forms.file>
                 </div>
 
-                <div class="mb-3 d-none" id="textFields">
+                <div class="mb-8 d-none" id="textFields">
                     <x-forms.quill
                         name="text_content"
                         label="Контентни киритинг"
                         :value="old('text_content')"
                         required
+                        label-cols="col-3"
+                        input-cols="col-9"
 
                     />
                 </div>
 
-
-                <div class="mb-3 mt-8">
-                    <label>Файл бириктириш</label>
-                    <input type="file" name="attachments[]" multiple class="form-control">
+                <div class="mb-3">
+                    <x-forms.attachments
+                        name="attachments[]"
+                        label="Қўшимча Файл бириктириш"
+                        helpText="Қўшимча Файл бириктириш"
+                        accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.zip,.rar,.jpg,.jpeg,.png,.gif,.mp4"
+                        label-cols="col-3"
+                        input-cols="col-9"
+                    >
+                    </x-forms.attachments>
                 </div>
+
+{{--                <div class="mb-3 mt-8">--}}
+{{--                    <label>Қўшимча Файл бириктириш</label>--}}
+{{--                    <input type="file" name="attachments[]" multiple class="form-control">--}}
+{{--                </div>--}}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Бекор қилиш</button>
@@ -111,7 +134,7 @@
         document.getElementById('textFields').classList.toggle('d-none', type != {{\App\Enums\LessonType::TEXT_CONTENT->value}});
     });
 
-    function openLessonModal(moduleId) {
+    function openAddLessonModal(moduleId) {
         document.getElementById('lesson-module-id').value = moduleId;
         const modal = new bootstrap.Modal(document.getElementById('createLessonModal'));
         modal.show();

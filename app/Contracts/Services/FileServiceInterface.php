@@ -13,7 +13,8 @@ interface FileServiceInterface
         ?object      $fileable = null,
         ?int         $userId = null,
         string       $disk = 'local',
-        string       $pathPrefix = ''
+        string       $pathPrefix = '',
+        bool         $replaceExisting = false,
     ): File;
 
     public function delete(File $file): bool;

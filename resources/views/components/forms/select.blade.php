@@ -14,7 +14,13 @@
 $id = $id ?? $name;
 @endphp
 
-<x-forms.group :name="$id" :label="$label" :required="$required">
+<x-forms.group
+    :name="$id"
+    :label="$label"
+    :required="$required"
+    :labelCols="$labelCols ?? 'col-sm-4'"
+    :inputCols="$inputCols ?? 'col-sm-8'"
+>
     <select
         name="{{ $name }}{{ $multiple ? '[]' : '' }}"
         id="{{ $id }}"
