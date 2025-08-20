@@ -344,7 +344,7 @@
     </x-forms.modal>
     <!-- Add Module Modal -->
 
-    <x-courses.lesson-modal title="asd"/>
+    <x-courses.lesson-modal :lesson="$lesson"/>
     @include('pages.instructor.courses.partials.add_lesson_modal')
 
 

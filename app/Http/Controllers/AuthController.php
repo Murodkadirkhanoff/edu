@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -104,5 +105,33 @@ class AuthController extends Controller
         );
 
         return response()->json(['message' => 'Kod qayta yuborildi']);
+    }
+
+    public function logout()
+    {
+        Auth::guard('web')->logout();
+
+        Session::invalidate();
+        Session::regenerateToken();
+
+        return redirect('/');
+    }
+
+    public function completeProfile(Request $request)
+    {
+        if ($request->isMethod('POST')) {
+            $data = $request->validate([
+                'first_name' => ['required', 'string', 'max:255'],
+                'last_name' => ['required', 'string', 'max:255'],
+            ]);
+
+            auth()->user()->update($data);
+
+            return redirect()->route('main')->with('success', 'Профиль маълумотлари муваффақиятли сақланди!');
+        } else {
+            return view('pages.auth.complete_profile');
+        }
+
+
     }
 }

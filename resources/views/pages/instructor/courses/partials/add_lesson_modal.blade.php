@@ -25,29 +25,29 @@
                     input-cols="col-9"
                 />
 
+                @if($course->is_lesson_purchase_available)
+                    <div id="lesson_price">
+                        <div class="mt-2"></div>
+                        <x-forms.input
+                            name="price"
+                            label="Дарс нархи"
+                            required
+                            placeholder="Move File…"
+                            class="mb-2 currency-input"
+                            value="{{ number_format($course->lesson_price_minor, 0, '.', ' ') }}"
+                            label-cols="col-3"
+                            input-cols="col-9"
+                        />
+                    </div>
 
-                <div id="lesson_price">
-                    <div class="mt-2"></div>
-                    <x-forms.input
-                        name="price"
-                        label="Дарс нархи"
-                        required
-                        placeholder="Move File…"
-                        class="mb-2 currency-input"
-                        value="{{ number_format($course->lesson_price_minor, 0, '.', ' ') }}"
+                    <x-forms.switch
+                        id="is_free"
+                        name="is_free"
+                        label="Дарсни бупул қилиш"
                         label-cols="col-3"
                         input-cols="col-9"
                     />
-                </div>
-
-                <x-forms.switch
-                    id="is_free"
-                    name="is_free"
-                    label="Дарсни бупул қилиш"
-                    label-cols="col-3"
-                    input-cols="col-9"
-                />
-
+                @endif
                 <x-forms.select
                     name="type"
                     label="Дарс тури"
@@ -103,10 +103,10 @@
                     </x-forms.attachments>
                 </div>
 
-{{--                <div class="mb-3 mt-8">--}}
-{{--                    <label>Қўшимча Файл бириктириш</label>--}}
-{{--                    <input type="file" name="attachments[]" multiple class="form-control">--}}
-{{--                </div>--}}
+                {{--                <div class="mb-3 mt-8">--}}
+                {{--                    <label>Қўшимча Файл бириктириш</label>--}}
+                {{--                    <input type="file" name="attachments[]" multiple class="form-control">--}}
+                {{--                </div>--}}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Бекор қилиш</button>

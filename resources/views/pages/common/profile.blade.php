@@ -21,10 +21,7 @@
                         <div class="card-body">
 
 
-                            <x-profile.avatar-manager />
-
-
-
+                            <x-profile.avatar-manager/>
 
 
                             <hr class="my-5"/>
@@ -52,8 +49,8 @@
                                     </div>
                                     <!-- Phone -->
                                     <div class="mb-3 col-12 col-md-6">
-                                        <label class="form-label" for="profileEditPhone">Телефон рақами</label>
-                                        <input type="text" id="profileEditPhone"
+                                        <label class="form-label" for="phone-mask">Телефон рақами</label>
+                                        <input type="text"  id="phone-mask"
                                                value="{{auth()->user()->phone_number}}" name="phone_number"
                                                class="form-control" placeholder="Phone" required/>
                                         <div class="invalid-feedback">Please enter phone number.</div>
@@ -67,22 +64,16 @@
                                         <div class="invalid-feedback">Please enter phone number.</div>
                                     </div>
 
-
-
                                     <div class="mb-auto col-12">
                                         <label class="form-label" for="specialization">Биография</label>
                                         <x-forms.quill-vertical
                                             name="biography"
                                             label="Биография киритинг"
-                                            :value="old('biography')"
+                                            :value="auth()->user()->biography"
                                             required
                                             help-text="Ўқувчилар сиз ҳақингизда кўпроқ маълумотга эга бўлишлари учун, сизнинг таржимаи холингиз, иш тажрибангиз ва шахсиятиингизни кенгроқ ёритинг. Сизнинг таржимаи холиңиз камида 50 та сўздан иборат бўлиши шарт."
                                         />
                                     </div>
-
-
-
-
 
 
                                     <div class="col-12 mt-4">
@@ -111,6 +102,18 @@
                     reader.readAsDataURL(e.target.files[0]);
                 }
             });
+        </script>
+    @endpush
+
+    @push('scripts')
+        <script src="{{ asset('assets/libs/imask/dist/imask.min.js') }}"></script>
+        <script>
+            const element = document.getElementById('phone-mask');
+            if (element) {
+                IMask(element, {
+                    mask: '+{998} 00 000 00 00'
+                });
+            }
         </script>
     @endpush
 </x-layouts.instructor.layout>

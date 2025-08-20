@@ -33,7 +33,8 @@ class User extends Authenticatable
         'otp_code',
         'otp_expires_at',
         'telegram_id',
-        'is_instructor_verified'
+        'biography',
+        'specialization',
     ];
 
     /**
@@ -84,13 +85,37 @@ class User extends Authenticatable
         return $this->morphOne(File::class, 'fileable')->where('type', FileType::USER_AVATAR->value)->latest();
     }
 
+    public function socialProfile()
+    {
+        return $this->hasOne(SocialProfile::class);
+    }
+
     public function getAvatarUrlAttribute()
     {
-        if ($this->avatar == null) {
-            return Storage::disk('public')->url('common/avatar.png');
+
+        if ($this->avatar) {
+            // Uploaded avatar via storage or route
+            return route('files.show', $this->avatar->id);
         }
 
-        // Если хочешь отдать через route (secure download)
-        return route('files.show', $this->avatar->id);
+        // If no avatar, generate initials
+        $initials = strtoupper(
+            mb_substr($this->first_name ?? '', 0, 1) .
+            mb_substr($this->last_name ?? '', 0, 1)
+        );
+
+        // Generate background color (hash based on user id or name for consistency)
+        $colors = ['#1abc9c', '#3498db', '#9b59b6', '#e67e22', '#e74c3c', '#2ecc71'];
+        $color = $colors[$this->id % count($colors)];
+
+        // Build SVG avatar
+        $svg = '
+        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+            <rect width="100%" height="100%" fill="' . $color . '"/>
+            <text x="50%" y="50%" dy=".3em" text-anchor="middle" fill="white" font-size="40" font-family="Arial, sans-serif">' . $initials . '</text>
+        </svg>';
+
+        // Return base64 image
+        return 'data:image/svg+xml;base64,' . base64_encode($svg);
     }
 }

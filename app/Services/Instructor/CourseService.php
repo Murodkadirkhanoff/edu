@@ -25,6 +25,7 @@ class CourseService
         return DB::transaction(function () use ($data) {
             $data['instructor_id'] = auth()->id();
             // Создаём сам курс
+
             $course = Course::create($data);
 
             if (!empty($data['thumbnail'])) {

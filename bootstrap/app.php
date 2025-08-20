@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureInstructorConfirmation;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -19,12 +20,12 @@ return Application::configure(basePath: dirname(__DIR__))
             ->prefix('api')      // 👈 Префикс
             ->group(base_path('routes/api.php'));
 
-            Route::middleware(['web','auth', 'role:instructor'])
+            Route::middleware(['web', 'auth', 'role:instructor'])
                 ->prefix('instructor')
                 ->name('instructor.')
                 ->group(base_path('routes/instructor.php'));
 
-            Route::middleware(['web','auth', 'role:admin'])
+            Route::middleware(['web', 'auth', 'role:admin'])
                 ->prefix('admin')
                 ->name('admin.')
                 ->group(base_path('routes/admin.php'));
@@ -37,12 +38,16 @@ return Application::configure(basePath: dirname(__DIR__))
             'telegram/webhook',
         ]);
 
+        $middleware->web(append: [
+            EnsureInstructorConfirmation::class,
+        ]);
+
         $middleware->redirectUsersTo('/dashboard');
         $middleware->redirectGuestsTo('/login');
         $middleware->alias([
             'role' => RoleMiddleware::class,
             'permission' => PermissionMiddleware::class,
-            'role_or_permission' => RoleOrPermissionMiddleware::class,
+            'role_or_permission' => RoleOrPermissionMiddleware::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

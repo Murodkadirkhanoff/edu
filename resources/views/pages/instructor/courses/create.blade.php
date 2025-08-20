@@ -142,7 +142,7 @@
                                     {{-- === Lesson purchase === --}}
                                     @php
                                         $showLessonInput = old('is_lesson_purchase_available', $course->is_lesson_purchase_available ?? false);
-                                        $lessonPrice     = old('lesson_price', $course->lesson_price ?? null);
+                                        $lessonPrice     = old('lesson_price', $course->lesson_price ?? 0);
                                     @endphp
 
 
@@ -158,7 +158,6 @@
                                         <x-forms.input
                                             name="lesson_price_minor"
                                             label="Дарс нархини киритинг"
-                                            required
                                             placeholder="Дарс нархини киритинг"
                                             class="mb-2 currency-input"
                                             value="{{ $lessonPrice }}"

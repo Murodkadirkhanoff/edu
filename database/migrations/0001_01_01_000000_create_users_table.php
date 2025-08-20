@@ -20,7 +20,6 @@ return new class extends Migration {
             $table->string('otp_code')->nullable();
             $table->timestamp('otp_expires_at')->nullable();
             $table->boolean('is_verified')->default(false);
-            $table->boolean('is_instructor_verified')->default(false);
 
             $table->string('telegram_id')->nullable()->unique();
 

@@ -26,6 +26,7 @@ Route::get('courses/{course}', [\App\Http\Controllers\Common\CourseController::c
 
 Route::post('/telegram/webhook', [\App\Http\Controllers\Auth\TelegramController::class, 'handleWebhook']);
 Route::any('profile', [\App\Http\Controllers\Common\ProfileController::class, 'profile'])->name('profile')->middleware(['auth', 'web']);
+Route::any('social-profiles', [\App\Http\Controllers\Common\ProfileController::class, 'socialProfile'])->name('social-profiles')->middleware(['auth', 'web']);
 
 
 Route::post('avatar/upload', [\App\Http\Controllers\Common\ProfileController::class, 'uploadAvatar'])->name('avatar.upload');

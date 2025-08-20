@@ -95,12 +95,12 @@
 {{--                                Security--}}
 {{--                            </a>--}}
 {{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link" href="../pages/social-profile.html">--}}
-{{--                                <i class="fe fe-refresh-cw nav-icon"></i>--}}
-{{--                                Social Profiles--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('social-profiles')}}">
+                                <i class="fe fe-refresh-cw nav-icon"></i>
+                                Ижтимоий тармоқ профиллари
+                            </a>
+                        </li>
 {{--                        <li class="nav-item">--}}
 {{--                            <a class="nav-link" href="../pages/notifications.html">--}}
 {{--                                <i class="fe fe-bell nav-icon"></i>--}}

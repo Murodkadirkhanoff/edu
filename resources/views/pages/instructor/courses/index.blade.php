@@ -22,7 +22,7 @@
                         <div>
                             <a href="{{ route('instructor.courses.create') }}" class="btn btn-primary">
                                 <i class="fe fe-plus me-2"></i>
-                               Яни курс кўшиш
+                                Яни курс кўшиш
                             </a>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                                 </thead>
                                 <!-- Table Body -->
                                 <tbody>
-                                @foreach($courses as $course)
+                                @forelse($courses as $course)
                                     <tr>
                                         <td>
                                             <a href="#">
@@ -72,35 +72,42 @@
                                         </td>
                                         <td>0</td>
                                         <td>
-                                            <span class="badge bg-{{ $course->status_color }}">
-                                                {{ $course->status_text }}
-                                            </span>
+            <span class="badge bg-{{ $course->status_color }}">
+                {{ $course->status_text }}
+            </span>
                                         </td>
                                         <td>{{$course->formatted_whole_price}}</td>
                                         <td>{{$course->created_at->diffForHumans()}}</td>
                                         <td>
-                                        <span class="dropdown dropstart">
-                                          <a class="btn-icon btn btn-ghost btn-sm rounded-circle" href="#" role="button"
-                                             id="courseDropdown1" data-bs-toggle="dropdown" data-bs-offset="-20,20"
-                                             aria-expanded="false">
-                                            <i class="fe fe-more-vertical"></i>
-                                          </a>
-                                          <span class="dropdown-menu" aria-labelledby="courseDropdown1">
-                                            <span class="dropdown-header">Харакатлар</span>
-                                            <a class="dropdown-item" href="{{ $course->path() }}/edit">
-                                              <i class="fe fe-edit dropdown-item-icon"></i>
-                                              Тахрирлаш
-                                            </a>
-                                            <a class="dropdown-item" href="#">
-                                              <i class="fe fe-trash dropdown-item-icon"></i>
-                                              Ўчириш
-                                            </a>
-                                          </span>
-                                        </span>
+                                            <span class="dropdown dropstart">
+                                              <a class="btn-icon btn btn-ghost btn-sm rounded-circle" href="#" role="button"
+                                                 id="courseDropdown1" data-bs-toggle="dropdown" data-bs-offset="-20,20"
+                                                 aria-expanded="false">
+                                                <i class="fe fe-more-vertical"></i>
+                                              </a>
+                                              <span class="dropdown-menu" aria-labelledby="courseDropdown1">
+                                                <span class="dropdown-header">Харакатлар</span>
+                                                <a class="dropdown-item" href="{{ $course->path() }}/edit">
+                                                  <i class="fe fe-edit dropdown-item-icon"></i>
+                                                  Тахрирлаш
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                  <i class="fe fe-trash dropdown-item-icon"></i>
+                                                  Ўчириш
+                                                </a>
+                                              </span>
+                                            </span>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="6" class="text-center text-muted py-4">
+                                            🚫 Курсы пока не добавлены
+                                        </td>
+                                    </tr>
+                                @endforelse
                                 </tbody>
+
                             </table>
 
 

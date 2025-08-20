@@ -20,14 +20,41 @@ class ProfileController extends Controller
     public function profile(Request $request)
     {
         if ($request->isMethod('POST')) {
-            dd($request->all());
             Auth::user()->update([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
+                'specialization' => $request->specialization,
+                'biography' => $request->biography,
             ]);
             return redirect()->back()->with(['success' => 'Профил муваффақиятли тахрирланди']);
         } else {
             return view('pages.common.profile');
+        }
+    }
+
+    public function socialProfile(Request $request)
+    {
+        if ($request->isMethod('POST')) {
+            $data = $request->validate([
+                'twitter_profile' => ['nullable', 'string', 'max:255'],
+                'telegram_profile' => ['nullable', 'string', 'max:255'],
+                'facebook_profile' => ['nullable', 'string', 'max:255'],
+                'instagram_profile' => ['nullable', 'string', 'max:255'],
+                'linkedin_profile' => ['nullable', 'string', 'max:255'],
+                'youtube_profile' => ['nullable', 'string', 'max:255'],
+            ]);
+
+            $user = auth()->user();
+
+            // updateOrCreate
+            $user->socialProfile()->updateOrCreate(
+                ['user_id' => $user->id],
+                $data
+            );
+
+            return redirect()->back()->with('success', 'Ижтимоий тармоқ профиллари муваффақиятли сақланди!');
+        } else {
+            return view('pages.common.social_profiles');
         }
     }
 
@@ -52,7 +79,7 @@ class ProfileController extends Controller
 
     public function deleteAvatar()
     {
-        if (auth()->user()->avatar){
+        if (auth()->user()->avatar) {
             $this->fileService->delete(auth()->user()->avatar);
         }
 

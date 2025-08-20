@@ -7,7 +7,8 @@
 <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
 
     {{-- Upload form --}}
-    <form action="{{ $uploadRoute }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center gap-3">
+    <form action="{{ $uploadRoute }}" method="POST" enctype="multipart/form-data"
+          class="d-flex align-items-center gap-3">
         @csrf
         <div class="position-relative">
             <img id="avatarPreview"
@@ -22,7 +23,8 @@
                    style="cursor:pointer;">
                 <i class="bi bi-camera"></i>
             </label>
-            <input type="file" id="avatar" name="avatar" class="d-none" accept="image/*" onchange="previewAvatar(event)">
+            <input type="file" id="avatar" name="avatar" class="d-none" accept="image/*"
+                   onchange="previewAvatar(event)">
         </div>
 
         <div>
@@ -32,12 +34,14 @@
         </div>
     </form>
 
-    {{-- Delete form --}}
-    <form action="{{ $deleteRoute }}" method="POST">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="btn btn-outline-danger btn-sm">Ўчириш</button>
-    </form>
+    @if($user->avatar)
+        {{-- Delete form --}}
+        <form action="{{ $deleteRoute }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-outline-danger btn-sm">Ўчириш</button>
+        </form>
+    @endif
 </div>
 
 {{-- JS for preview --}}

@@ -64,6 +64,20 @@
                             </span>
                             <a href="{{ route('instructor.dashboard') }}" class="text-inherit fs-5 fw-medium">Инструктор</a>
                         </div>
+
+                    <div class="d-flex gap-2 align-items-center lh-0">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                <path fill-rule="evenodd"
+                                      d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37
+                                      C3.242 11.226 5.52 10 8 10s4.757 1.226
+                                      5.468 2.37A7 7 0 0 0 8 1"/>
+                            </svg>
+                        </span>
+                        <a href="{{ route('profile') }}" class="text-inherit fs-5 fw-medium">Профиль</a>
+                    </div>
                 @endauth
 
             </div>
@@ -71,18 +85,29 @@
     </div>
 </div>
 
-<nav class="navbar navbar-expand-lg @@classList">
+<nav class="navbar navbar-expand-lg bg-white">
     <div class="container px-0">
-        <a class="navbar-brand" href="../index.html"><img src="../assets/images/brand/logo/logo.svg"
-                                                          alt="Geeks" /></a>
+        <a class="navbar-brand" href="{{route('main')}}"><img src="../assets/images/brand/logo/logo.svg"
+                                                              alt="Geeks"/></a>
+        <!-- Mobile view nav wrap -->
+        @auth
 
-        <x-profile.nav-dropdowns />
 
+
+{{--            <div class="ms-auto d-flex align-items-center order-lg-3">--}}
+{{--                <a href="../pages/sign-up.html" class="btn btn-primary">Тизимдан чиқиш</a>--}}
+{{--            </div>--}}
+        @endauth
         <div>
             <!-- Button -->
-            <button class="navbar-toggler collapsed ms-2" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false"
-                    aria-label="Toggle navigation">
+            <button
+                class="navbar-toggler collapsed ms-2"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbar-default"
+                aria-controls="navbar-default"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
                 <span class="icon-bar top-bar mt-0"></span>
                 <span class="icon-bar middle-bar"></span>
                 <span class="icon-bar bottom-bar"></span>
@@ -126,6 +151,7 @@
                     </ul>
 
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('about')}}">Biz haqimizda</a>
                 </li>

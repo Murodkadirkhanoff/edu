@@ -1,20 +1,47 @@
 @props([
-    'title'
+    'lesson',
+    'duration',
+    'instructor'
 ])
 
 <div>
     <div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">{{ $title  }}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Ёпиш"></button>
+{{--                <div class="modal-header">--}}
+{{--                    <nav aria-label="breadcrumb">--}}
+{{--                        <ol class="breadcrumb">--}}
+{{--                            <li class="breadcrumb-item active" aria-current="page">{{$lesson->module->course->title}}</li>--}}
+{{--                            <li class="breadcrumb-item active" aria-current="page">{{$lesson->module->title}}</li>--}}
+{{--                            <li class="breadcrumb-item active" aria-current="page">{{$lesson->title}}</li>--}}
+{{--                        </ol>--}}
+{{--                    </nav>--}}
+
+
+{{--                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Ёпиш"></button>--}}
+{{--                </div>--}}
+
+                <div class="modal-header bg-primary-subtle bg-gradient-to-b border-0">
+                    <div class="w-100">
+                        <!-- Title -->
+                        <h5 class="modal-title fw-bold mb-2">Lesson Title Goes Here</h5>
+
+                        <!-- Meta info -->
+                        <div class="d-flex flex-wrap gap-3 small text-muted">
+                            <span><i class="bi bi-person"></i> John Doe</span>
+                            <span><i class="bi bi-clock"></i> 45 min</span>
+                            <span><i class="bi bi-cash"></i> $29.99</span>
+                        </div>
+                    </div>
+
+                    <!-- Close button -->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+
                 <div class="modal-body">
                     {{-- Видео --}}
                     <video id="lesson-video" class="plyr w-100 d-none"
                            style="max-height: 80vh; border-radius: 8px; object-fit: contain" controls></video>
-
 
                     {{-- Текст --}}
                     <div id="lesson-text" class="d-none">
@@ -22,9 +49,28 @@
                              style="white-space: pre-line; font-size: 1.1rem;"></div>
                     </div>
                 </div>
+
+                <div class="modal-footer bg-light border-0 d-flex justify-content-between align-items-center">
+                    <!-- Left: Created date -->
+                    <small class="text-muted">Created: Aug 20, 2025</small>
+
+                    <!-- Right: Dropdown -->
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            Options
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="#">Edit</a></li>
+                            <li><a class="dropdown-item" href="#">Duplicate</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="#">Delete</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+</div>
 
     {{-- Скрипт для модала --}}
     @push('scripts')

@@ -46,7 +46,7 @@ class CourseLessonController extends Controller
             'attachments.*' => 'file|max:10240',
         ]);
 
-        if ($validated['is_free']) {
+        if ($request->has('is_free') && $validated['is_free']) {
             $validated['price'] = 0;
         }
 

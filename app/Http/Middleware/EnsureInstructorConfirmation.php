@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class EnsureInstructorConfirmation
@@ -15,9 +16,14 @@ class EnsureInstructorConfirmation
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->user()->is_instructor_verified) {
-            return redirect('/home');
+        if (Auth::check()) {
+            $user = Auth::user();
+            if (!$user->first_name || !$user->last_name) {
+                // Если данные не заполнены — отправляем на страницу профиля
+                return redirect()->route('profile.complete');
+            }
         }
+
 
         return $next($request);
     }
