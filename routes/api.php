@@ -26,6 +26,16 @@ Route::any('payme', function (Request $request) {
             ]
         ];
     }
+    if ($method == "CreateTransaction") {
+
+        $transaction_id = $request->input('params.transaction_id');
+
+        $response = [
+            "result" => [
+                "allow" => $transaction_id
+            ]
+        ];
+    }
 
     return response()->json($response);
 });

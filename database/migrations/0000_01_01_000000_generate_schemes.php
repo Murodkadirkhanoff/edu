@@ -15,6 +15,7 @@ return new class extends Migration {
         DB::statement('CREATE SCHEMA IF NOT EXISTS lessons;');
         DB::statement('CREATE SCHEMA IF NOT EXISTS users;');
         DB::statement('CREATE SCHEMA IF NOT EXISTS media;');
+        DB::statement('CREATE SCHEMA IF NOT EXISTS billings;');
 //        DB::statement('CREATE SCHEMA IF NOT EXISTS quizzes;');
 //        DB::statement('CREATE SCHEMA IF NOT EXISTS certificates;');
 //        DB::statement('CREATE SCHEMA IF NOT EXISTS payments;');
