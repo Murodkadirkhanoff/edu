@@ -4,6 +4,7 @@ use App\Http\Controllers\Common\CategoryController;
 use App\Http\Controllers\Media\FileController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\VideoController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 require __DIR__ . '/auth.php';
@@ -33,4 +34,9 @@ Route::any('social-profiles', [\App\Http\Controllers\Common\ProfileController::c
 Route::post('avatar/upload', [\App\Http\Controllers\Common\ProfileController::class, 'uploadAvatar'])->name('avatar.upload');
 Route::delete('avatar/delete', [\App\Http\Controllers\Common\ProfileController::class, 'deleteAvatar'])->name('avatar.delete');
 
-Route::get('lesson/show/{lesson}',[\App\Http\Controllers\Instructor\CourseLessonController::class,'lessonshow'])->name('lesson.show');
+Route::get('lesson/show/{lesson}', [\App\Http\Controllers\Instructor\CourseLessonController::class, 'lessonshow'])->name('lesson.show');
+
+
+Route::any('payme', function (Request $request){
+    dd($request->all());
+});
