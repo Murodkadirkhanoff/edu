@@ -19,6 +19,6 @@ WORKDIR /var/www/html
 #RUN mkdir -p storage bootstrap/cache \
 #    && chown -R www-data:www-data storage bootstrap/cache
 
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 /var/www/html/storage \
-    && chmod -R 775 /var/www/html/bootstrap/cache
+#RUN chown -R www-data:www-data /var/www/html \
+#    && chmod -R 775 /var/www/html/storage \
+#    && chmod -R 775 /var/www/html/bootstrap/cache
