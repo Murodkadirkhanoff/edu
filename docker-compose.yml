@@ -28,6 +28,7 @@ services:
             - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
             - ./certbot/conf:/etc/letsencrypt
             - ./certbot/www:/var/www/chashma.uz/certbot
+            - ./docker/nginx/logs:/var/log/nginx
         depends_on:
             - app
         networks:
