@@ -13,7 +13,8 @@ services:
             - .:/var/www/html
         networks:
             - app-network
-        user: "${UID}:${GID}"
+        #user: "${UID}:${GID}"
+        user: "www-data:www-data"
     web:
         image: nginx:alpine
         container_name: laravel-nginx
