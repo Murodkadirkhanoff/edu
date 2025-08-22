@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Media\WasabiController;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,7 +31,7 @@ Route::any('payme', function (Request $request) {
 
 
         $transaction_id = $request->input('params.id');
-
+        $transaction = Transaction::where('external_id',$transaction_id);
         $response = [
             "result" => [
                 "allow" => $transaction_id
