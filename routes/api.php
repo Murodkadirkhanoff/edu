@@ -28,7 +28,8 @@ Route::any('payme', function (Request $request) {
     }
     if ($method == "CreateTransaction") {
 
-        $transaction_id = $request->input('params.transaction_id');
+
+        $transaction_id = $request->input('params.id');
 
         $response = [
             "result" => [
