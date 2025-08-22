@@ -38,5 +38,5 @@ Route::get('lesson/show/{lesson}', [\App\Http\Controllers\Instructor\CourseLesso
 
 
 Route::any('payme', function (Request $request){
-    dd($request->all());
+  return response()->json($request->all());
 });
