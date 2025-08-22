@@ -16,6 +16,7 @@ WORKDIR /var/www/html
 
 # Только если не используешь volume
 # COPY . .
-
+RUN chown -R www-data:www-data /var/www
 RUN mkdir -p storage bootstrap/cache \
     && chown -R www-data:www-data storage bootstrap/cache
+
