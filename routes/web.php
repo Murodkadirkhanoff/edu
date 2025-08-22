@@ -37,6 +37,4 @@ Route::delete('avatar/delete', [\App\Http\Controllers\Common\ProfileController::
 Route::get('lesson/show/{lesson}', [\App\Http\Controllers\Instructor\CourseLessonController::class, 'lessonshow'])->name('lesson.show');
 
 
-Route::any('payme', function (Request $request){
-  return response()->json($request->all());
-});
+
