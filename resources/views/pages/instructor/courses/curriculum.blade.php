@@ -179,6 +179,13 @@
                                                                                                     class="badge bg-{{ $lesson->status_color }}-soft">{{$lesson->status_text}}</span>
                                                                                             </li>
                                                                                         @endif
+
+                                                                                        @if($lesson->formatted_price)
+                                                                                            <li class="list-inline-item">
+                                                                                                <i class="bi bi-cash align-baseline me-1 text-secondary"></i>
+                                                                                                <span>{{ $lesson->formatted_price}}</span>
+                                                                                            </li>
+                                                                                        @endif
                                                                                     </ul>
                                                                                 </div>
 
@@ -189,8 +196,19 @@
 
                                                                                             @if ($lesson->isVideo())
                                                                                                 <a
+{{--                                                                                                    href="{{route('lesson.show',['lesson' => $lesson])}}"--}}
+
                                                                                                     href="javascript:void(0)"
-                                                                                                    onclick="openLessonModal({{ $lesson->id }}, 'video')"
+                                                                                                    class="open-video"
+                                                                                                    data-course-title="{{ $lesson->module->course->title }}"
+                                                                                                    data-module-title="{{ $lesson->module->title }}"
+                                                                                                    data-lesson-title="{{ $lesson->title }}"
+                                                                                                    data-author="{{ $lesson->module->course->instructor->full_name }}"
+                                                                                                    data-duration="{{ $lesson->video?->duration }}"
+                                                                                                    data-price="{{  $lesson->formatted_price }}"
+                                                                                                    data-path="{{ route('files.show', $lesson->video->id) }}"
+                                                                                                    data-lessonid="{{$lesson->id }}"
+{{--                                                                                                    onclick="openLessonModal(this,{{ $lesson->id }}, 'video')"--}}
                                                                                                 >
                                                                                                     Ko'rib chiqish
                                                                                                     <span>
@@ -344,7 +362,8 @@
     </x-forms.modal>
     <!-- Add Module Modal -->
 
-    <x-courses.lesson-modal :lesson="$lesson"/>
+    <x-courses.lesson-modal/>
+
     @include('pages.instructor.courses.partials.add_lesson_modal')
 
 

@@ -26,6 +26,8 @@
 
     <!-- Plyr CSS -->
     <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css"/>
+    <link href="https://vjs.zencdn.net/8.23.3/video-js.css" rel="stylesheet" />
+
     {{-- Additional Styles --}}
     @stack('styles')
     @livewireStyles
@@ -87,6 +89,7 @@
 <!-- HLS.js -->
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
+<script src="https://vjs.zencdn.net/8.23.3/video.min.js"></script>
 
 @stack('scripts')
 @livewireScripts

@@ -55,14 +55,13 @@ class CourseLessonController extends Controller
         $lesson->save();
 
         if ($request->hasFile('video_content')) {
-
             $file = $request->file('video_content');
             // Save locally first
             $localPath = $file->store('tmp', 'local');
             $lesson->update([
                 'status' => LessonStatus::PROCESSING->value,
             ]);
-            ProcessLessonVideo::dispatch($lesson->id, $localPath);
+            ProcessLessonVideo::dispatchSync($lesson->id, $localPath);
         }
 
         if ($request->hasFile('attachments')) {
@@ -79,6 +78,9 @@ class CourseLessonController extends Controller
         return redirect()->back()->with('success', 'Lesson created successfully.');
     }
 
+
+
+
     public function stream($lessonId, Request $request)
     {
         $lesson = Lesson::find($lessonId);
@@ -86,12 +88,10 @@ class CourseLessonController extends Controller
 //        if (!auth()->user()->canView($lesson)) {
 //            abort(403);
 //        }
-        $disk = Storage::disk('wasabi');
+        $disk = Storage::disk($lesson->video->disk);
         if (!$disk->exists($lesson->video->path)) {
-            abort(404);
+            abort(404, 'sda');
         }
-
-
 
         // Получаем stream из Wasabi
         $stream = $disk->readStream($lesson->video->path);
@@ -101,7 +101,7 @@ class CourseLessonController extends Controller
         $length = $filesize;
         $status = 200;
         $headers = [
-            'Content-Type' => 'video/mp4',
+            'Content-Type' =>  $disk->mimeType($lesson->video->path) ?? 'video/mp4',
             'Accept-Ranges' => 'bytes',
         ];
 
@@ -157,6 +157,11 @@ class CourseLessonController extends Controller
         }
 
         return response()->json(['status' => 'ok']);
+    }
+
+    public function lessonshow(Request $request, Lesson $lesson)
+    {
+        return view('lesson',compact('lesson'));
     }
 
 }

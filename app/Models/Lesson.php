@@ -72,6 +72,7 @@ class Lesson extends Model
             }
         }
 
+        return null;
     }
 
     public function getStatusTextAttribute(): string

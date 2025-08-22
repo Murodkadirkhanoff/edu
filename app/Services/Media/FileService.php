@@ -32,7 +32,6 @@ class FileService implements FileServiceInterface
             }
         }
 
-
         $storedPath = $uploadedFile->store(
             $pathPrefix,
             $disk

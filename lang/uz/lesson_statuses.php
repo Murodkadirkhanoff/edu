@@ -4,5 +4,5 @@
 return [
     'pending' => 'Kutish jarayonida',
     'processing' => 'Yuklanmoqda',
-    'ready' => 'Tayyor',
+    'ready' => 'Yuklandi',
 ];

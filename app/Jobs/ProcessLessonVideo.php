@@ -29,7 +29,6 @@ class ProcessLessonVideo implements ShouldQueue
      */
     public function handle(FileServiceInterface $fileService): void
     {
-        sleep(5);
         $lesson = Lesson::find($this->lessonId);
         if (!$lesson) return;
 
@@ -52,7 +51,7 @@ class ProcessLessonVideo implements ShouldQueue
             uploadedFile: $uploadedFile,
             type: FileType::LESSON_VIDEO->value,
             fileable: $lesson,
-            disk: 'wasabi',
+//            disk: 'wasabi',
             pathPrefix: FilePrefix::LESSON_VIDEO->value
         );
 
