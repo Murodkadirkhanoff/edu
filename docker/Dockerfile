@@ -1,6 +1,6 @@
 FROM php:8.4-fpm
 
-RUN usermod -u 1000 www-data
+#RUN usermod -u 1000 www-data
 
 RUN apt-get update && apt-get install -y \
     git curl zip unzip libpq-dev libzip-dev ffmpeg \
