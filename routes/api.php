@@ -15,6 +15,17 @@ Route::post('/upload/complete', [WasabiController::class, 'completeMultipartUplo
 Route::post('/lesson/{lesson}/attach-video', [WasabiController::class, 'attachVideo']);
 
 
-Route::any('payme', function (Request $request){
-    return response()->json($request->all());
+Route::any('payme', function (Request $request) {
+
+    $method = $request->get('method');
+
+    if ($method == "CheckPerformTransaction") {
+        $response = [
+            "result" => [
+                "allow" => true
+            ]
+        ];
+    }
+
+    return response()->json($response);
 });
