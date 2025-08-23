@@ -31,12 +31,12 @@
     </div>
     <ul class="navbar-nav navbar-right-wrap ms-2 flex-row d-none d-md-block">
         @auth
-            <li class="dropdown d-inline-block stopevent position-static">
+            <li class="dropdown d-inline-block stopevent ">
                 <a class="btn btn-light btn-icon rounded-circle indicator indicator-primary" href="#" role="button"
                    id="dropdownNotificationSecond" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fe fe-bell"></i>
                 </a>
-                <div class="dropdown-menu dropdown-menu-end dropdown-menu-lg position-absolute mx-3 my-5"
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-lg"
                      aria-labelledby="dropdownNotificationSecond">
                     <div>
                         <div class="border-bottom px-3 pb-3 d-flex align-items-center">
@@ -172,13 +172,13 @@
                 </div>
             </li>
 
-            <li class="dropdown ms-2 d-inline-block position-static">
+            <li class="dropdown ms-2 d-inline-block ">
                 <a class="rounded-circle" href="#" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                     <div class="avatar avatar-md avatar-indicators avatar-online">
                         <img alt="avatar" src="{{auth()->user()->avatar_url}}" class="rounded-circle" />
                     </div>
                 </a>
-                <div class="dropdown-menu dropdown-menu-end position-absolute mx-3 my-5">
+                <div class="dropdown-menu dropdown-menu-end">
                     <div class="dropdown-item">
                         <div class="d-flex">
                             <div class="avatar avatar-md avatar-indicators avatar-online">
