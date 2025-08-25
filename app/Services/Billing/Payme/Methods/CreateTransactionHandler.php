@@ -5,6 +5,7 @@ namespace App\Services\Billing\Payme\Methods;
 use App\Models\Order;
 use App\Models\Transaction;
 use Carbon\Carbon;
+use Goodoneuz\PayUz\Http\Classes\PaymentException;
 use Illuminate\Support\Facades\Auth;
 
 class CreateTransactionHandler implements PaymeMethodHandler
@@ -70,6 +71,14 @@ class CreateTransactionHandler implements PaymeMethodHandler
 
             // Иначе — оставляем создание доступным
 
+        }else{
+            try {
+                (CheckPerformTransactionHandler::class)->handle($account);
+            } catch (\Exception $e) {
+                if ($e->response->response['error'] != null) {
+                    throw $e;
+                }
+            }
         }
         $model = Order::find($account['order_id']);
         // Если транзакции нет — создаём новую
