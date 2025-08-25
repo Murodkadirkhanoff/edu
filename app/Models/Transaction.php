@@ -31,6 +31,6 @@ class Transaction extends Model
         $this->reason = $reason;
         $this->canceled_at = $updated_time;
 
-        $this->update();
+        $this->save();
     }
 }
