@@ -11,7 +11,7 @@ class PaymeController extends Controller
 {
     public function handle(Request $request, PaymeService $paymeService)
     {
-        $method = $request->input('method');
+        $method = $request->get('method');
         $params = $request->input('params', []);
 
         try {
