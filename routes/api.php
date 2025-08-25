@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Media\WasabiController;
 use App\Models\Transaction;
+use App\Services\Payment\Payme\Payme;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,26 +20,6 @@ Route::post('/lesson/{lesson}/attach-video', [WasabiController::class, 'attachVi
 
 Route::any('payme', function (Request $request) {
 
-    $method = $request->get('method');
-
-    if ($method == "CheckPerformTransaction") {
-        $response = [
-            "result" => [
-                "allow" => true
-            ]
-        ];
-    }
-    if ($method == "CreateTransaction") {
-
-
-        $transaction_id = $request->input('params.id');
-        $transaction = Transaction::where('external_id',$transaction_id);
-        $response = [
-            "result" => [
-                "allow" => $transaction_id
-            ]
-        ];
-    }
-
-    return response()->json($response);
+    $payme = new Payme;
+    $payme->run();
 });

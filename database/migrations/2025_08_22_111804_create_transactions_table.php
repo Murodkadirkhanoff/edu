@@ -12,17 +12,28 @@ return new class extends Migration {
     {
         Schema::create('billings.transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained("users.users")->cascadeOnDelete();
-            $table->integer('order_id'); // TODO foreign key with orders table
-            $table->bigInteger('amount',);
-            $table->string('currency', 3)->default('UZS');
 
+            $table->foreignId('user_id')->constrained("users.users")->onDelete('cascade');
+            //$table->foreignId('order_id')->nullable()->constrained()->onDelete('set null');
+            $table->integer('order_id');
 
-            $table->integer('reason');
-            $table->integer('state');
-            $table->string('payment_method')->nullable(); //payme, click, uzum
-            $table->string('external_id')->nullable();
-            $table->text('description')->nullable();
+            $table->unsignedBigInteger('amount');
+            $table->string('currency', 10)->default('UZS');
+
+            $table->enum('status', ['pending', 'processing', 'paid', 'canceled', 'failed'])->default('pending');
+
+            $table->string('provider'); // payme, click, paypal и т.д.
+            $table->string('provider_transaction_id')->nullable()->index(); // например payme_id
+            $table->unsignedBigInteger('provider_created_at')->nullable();  // Payme "time"
+            $table->string('provider_state')->nullable(); // например Payme.state = 1,2,-1
+
+            $table->timestamp('performed_at')->nullable();
+            $table->timestamp('canceled_at')->nullable();
+
+            $table->string('reason')->nullable();
+
+            $table->jsonb('provider_payload')->nullable(); // "сырые" данные для истории
+
             $table->timestamps();
         });
     }
