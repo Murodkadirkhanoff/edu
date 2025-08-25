@@ -46,7 +46,7 @@ class CreateTransactionHandler implements PaymeMethodHandler
                         'result' => [
                             'create_time' => $transaction->provider_created_at,
                             'transaction' => (string)$transaction->id,
-                            'state' => $transaction->provider_state,
+                            'state' => (int) $transaction->provider_state,
                         ]
                     ];
                 }
@@ -89,7 +89,7 @@ class CreateTransactionHandler implements PaymeMethodHandler
             'result' => [
                 'create_time' => $transaction->provider_created_at,
                 'transaction' => (string)$transaction->id,
-                'state' => $transaction->provider_state,
+                'state' => (int) $transaction->provider_state,
             ]
         ];
     }
