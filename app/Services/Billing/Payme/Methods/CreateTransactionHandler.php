@@ -22,35 +22,53 @@ class CreateTransactionHandler implements PaymeMethodHandler
 
         if ($transaction) {
             if ($transaction->provider_state == 1) {
-                // Уже создана ранее, возвращаем текущий статус
+
+                $providerTime = Carbon::createFromTimestampMs($transaction->provider_created_at);
+                if ($providerTime->lt(now()->subMinutes(10))) {
+                    $transaction->update([
+                        'provider_state' => -1,
+                        'reason' => 4,
+                    ]);
+
+                    return [
+                        "error" => [
+                            "code" => -31008,
+                            "message" => [
+                                "ru" => "Transaction timeout",
+                                "uz" => "Transaction timeout",
+                                "en" => "Transaction timeout"
+                            ],
+                            "data" => "timeout"
+                        ]
+                    ];
+                } else {
+                    return [
+                        'result' => [
+                            'create_time' => $transaction->provider_created_at,
+                            'transaction' => (string)$transaction->id,
+                            'state' => $transaction->provider_state,
+                        ]
+                    ];
+                }
+            }else{
                 return [
-                    'result' => [
-                        'create_time' => $transaction->provider_created_at,
-                        'transaction' => (string)$transaction->id,
-                        'state' => $transaction->provider_state,
+                    "error" => [
+                        "code" => -31008,
+                        "message" => [
+                            "ru" => "Transaction timeout",
+                            "uz" => "Transaction timeout",
+                            "en" => "Transaction timeout"
+                        ],
+                        "data" => "timeout"
                     ]
                 ];
             }
 
             // Проверка таймаута (10 минут)
-            $providerTime = Carbon::createFromTimestampMs($transaction->provider_created_at);
-            if ($providerTime->lt(now()->subMinutes(10))) {
-                $transaction->update([
-                    'provider_state' => -1,
-                    'reason' => 4,
-                ]);
 
-                throw new \Exception('Transaction timeout', -31008);
-            }
 
             // Иначе — оставляем создание доступным
-            return [
-                'result' => [
-                    'create_time' => $transaction->provider_created_at,
-                    'transaction' => (string)$transaction->id,
-                    'state' => $transaction->provider_state,
-                ]
-            ];
+
         }
 
         // Если транзакции нет — создаём новую
