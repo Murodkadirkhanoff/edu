@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Billing\PaymeController;
 use App\Http\Controllers\Media\WasabiController;
 use App\Models\Transaction;
 use Carbon\Carbon;
@@ -17,56 +18,58 @@ Route::post('/upload/complete', [WasabiController::class, 'completeMultipartUplo
 Route::post('/lesson/{lesson}/attach-video', [WasabiController::class, 'attachVideo']);
 
 
-Route::any('payme', function (Request $request) {
-
-    $method = $request->get('method');
-
-    if ($method == "CheckPerformTransaction") {
-        $response = [
-            "result" => [
-                "allow" => true
-            ]
-        ];
-    }
-    if ($method == "CreateTransaction") {
-        $transaction_id = $request->input('params.id');
-        $transaction = Transaction::where('provider_transaction_id',$transaction_id);
-
-        if ($transaction){
-
-            if ($transaction->provider_state == 1){
-
-            }else{
-
-            }
-
-            $providerTime = Carbon::createFromTimestampMs($transaction->provider_created_at);
-
-            if ($providerTime->lt(now()->subMinutes(10))) {
-                $transaction->update([
-                    'provider_state' => -1,
-                    'reason' => 4
-                ]);
-            }else{
-                return response()->json([
-                    'result' => [
-                        'create_time' => $transaction->created_at->valueOf(),
-                        'transaction' => $transaction->id,
-                        'state' => $transaction->provider_state,
-                    ]
-                ]);
-            }
-
-        }else{
-
-        }
-
-        $response = [
-            "result" => [
-                "allow" => $transaction_id
-            ]
-        ];
-    }
-
-    return response()->json($response);
-});
+Route::any('payme',[PaymeController::class, 'handle']);
+//
+//Route::any('payme', function (Request $request) {
+//
+//    $method = $request->get('method');
+//
+//    if ($method == "CheckPerformTransaction") {
+//        $response = [
+//            "result" => [
+//                "allow" => true
+//            ]
+//        ];
+//    }
+//    if ($method == "CreateTransaction") {
+//        $transaction_id = $request->input('params.id');
+//        $transaction = Transaction::where('provider_transaction_id',$transaction_id);
+//
+//        if ($transaction){
+//
+//            if ($transaction->provider_state == 1){
+//
+//            }else{
+//
+//            }
+//
+//            $providerTime = Carbon::createFromTimestampMs($transaction->provider_created_at);
+//
+//            if ($providerTime->lt(now()->subMinutes(10))) {
+//                $transaction->update([
+//                    'provider_state' => -1,
+//                    'reason' => 4
+//                ]);
+//            }else{
+//                return response()->json([
+//                    'result' => [
+//                        'create_time' => $transaction->created_at->valueOf(),
+//                        'transaction' => $transaction->id,
+//                        'state' => $transaction->provider_state,
+//                    ]
+//                ]);
+//            }
+//
+//        }else{
+//
+//        }
+//
+//        $response = [
+//            "result" => [
+//                "allow" => $transaction_id
+//            ]
+//        ];
+//    }
+//
+//    return response()->json($response);
+//});
