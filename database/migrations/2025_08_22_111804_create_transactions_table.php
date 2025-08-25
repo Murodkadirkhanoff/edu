@@ -27,8 +27,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('provider_created_at')->nullable();  // Payme "time"
             $table->string('provider_state')->nullable(); // например Payme.state = 1,2,-1
 
-            $table->timestamp('performed_at')->nullable();
-            $table->timestamp('canceled_at')->nullable();
+            $table->unsignedBigInteger('performed_at')->nullable();
+            $table->unsignedBigInteger('canceled_at')->nullable();
 
             $table->string('reason')->nullable();
 
