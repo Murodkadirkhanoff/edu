@@ -41,7 +41,7 @@ class CancelTransactionHandler implements PaymeMethodHandler
                 ];
 
             case 1:
-                $transaction->cancel(1 * $transaction->reason);
+                $transaction->cancel(1 * $params['reason']);
 
                 $cancel_time =now()->valueOf();
 
