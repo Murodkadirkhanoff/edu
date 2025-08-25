@@ -73,7 +73,7 @@ class CreateTransactionHandler implements PaymeMethodHandler
 
         }else{
             try {
-                (CheckPerformTransactionHandler::class)->handle($account);
+                (new CheckPerformTransactionHandler)->handle($account);
             } catch (\Exception $e) {
                 if ($e->response->response['error'] != null) {
                     throw $e;
