@@ -2,6 +2,7 @@
 
 namespace App\Services\Billing\Payme\Methods;
 
+use App\Models\Order;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -70,7 +71,7 @@ class CreateTransactionHandler implements PaymeMethodHandler
             // Иначе — оставляем создание доступным
 
         }
-
+        $model = Order::find($account['order_id']);
         // Если транзакции нет — создаём новую
         $transaction = Transaction::create([
             'provider_transaction_id' => $id,
@@ -81,6 +82,8 @@ class CreateTransactionHandler implements PaymeMethodHandler
             'provider_created_at' => $time,
             'provider_state' => 1,
             'provider_payload' => json_encode($params),
+            'transactionable_type' => get_class($model),
+            'transactionable_id' => $model->id
             //'account' => json_encode($account),
 //            'receivers' => $receivers ? json_encode($receivers) : null,
         ]);

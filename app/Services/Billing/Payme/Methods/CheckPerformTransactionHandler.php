@@ -78,6 +78,8 @@ class CheckPerformTransactionHandler implements PaymeMethodHandler
     {
         return Transaction::where('provider', 'payme')
             ->where('state', 1)
+            ->where('transactionable_type', get_class($model))
+            ->where('transactionable_id', $model->id)
             ->get();
     }
 
@@ -85,6 +87,8 @@ class CheckPerformTransactionHandler implements PaymeMethodHandler
     {
         return Transaction::where('provider', 'payme')
             ->where('state', 2)
+            ->where('transactionable_type', get_class($model))
+            ->where('transactionable_id', $model->id)
             ->get();
     }
 }

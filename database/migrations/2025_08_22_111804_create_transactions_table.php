@@ -34,6 +34,8 @@ return new class extends Migration {
 
             $table->jsonb('provider_payload')->nullable(); // "сырые" данные для истории
 
+            $table->morphs('transactionable');
+
             $table->timestamps();
         });
     }
