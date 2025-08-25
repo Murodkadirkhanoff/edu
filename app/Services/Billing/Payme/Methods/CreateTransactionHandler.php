@@ -4,6 +4,7 @@ namespace App\Services\Billing\Payme\Methods;
 
 use App\Models\Transaction;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class CreateTransactionHandler implements PaymeMethodHandler
 {
@@ -55,6 +56,7 @@ class CreateTransactionHandler implements PaymeMethodHandler
         // Если транзакции нет — создаём новую
         $transaction = Transaction::create([
             'provider_transaction_id' => $id,
+            'user_id' => 1,
             'amount' => $amount,
             'provider_created_at' => $time,
             'provider_state' => 1,
