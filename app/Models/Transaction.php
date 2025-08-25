@@ -20,12 +20,12 @@ class Transaction extends Model
     {
         $updated_time = now()->valueOf();
 
-        if ($this->state == 2) {
+        if ($this->provider_state == 2) {
             // Scenario: CreateTransaction -> PerformTransaction -> CancelTransaction
-            $this->state = -2;
+            $this->provider_state = -2;
         } else {
             // Scenario: CreateTransaction -> CancelTransaction
-            $this->state = -1;
+            $this->provider_state = -1;
         }
 
         $this->reason = $reason;
