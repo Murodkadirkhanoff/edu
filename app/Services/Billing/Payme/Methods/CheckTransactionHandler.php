@@ -12,7 +12,7 @@ class CheckTransactionHandler implements PaymeMethodHandler
     {
         $id = $params['id'];
 
-        $transaction = Transaction::find($id);
+        $transaction = Transaction::where('provider_transaction_id',$id)->first();
         if (!$transaction) {
             return [
                 "error" => [
