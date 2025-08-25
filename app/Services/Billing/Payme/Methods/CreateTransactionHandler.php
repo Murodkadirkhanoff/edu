@@ -58,6 +58,7 @@ class CreateTransactionHandler implements PaymeMethodHandler
             'provider_transaction_id' => $id,
             'user_id' => 1,
             'order_id' => 1,
+            'provider' => "payme",
             'amount' => $amount,
             'provider_created_at' => $time,
             'provider_state' => 1,
