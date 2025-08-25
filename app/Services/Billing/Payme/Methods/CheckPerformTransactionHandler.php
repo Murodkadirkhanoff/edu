@@ -5,13 +5,15 @@ namespace App\Services\Billing\Payme\Methods;
 use App\Models\Order;
 use App\Models\Transaction;
 use Goodoneuz\PayUz\Models\PaymentSystem;
+use Illuminate\Support\Arr;
 
 class CheckPerformTransactionHandler implements PaymeMethodHandler
 {
     public function handle(array $params): array
     {
+        $orderId = Arr::get(request()->all(), 'params.account.order_id');
 //        $this->validateParams($this->request->params);
-        $model = Order::find($params['account']['order_id']);
+        $model = Order::find($orderId);
 
         if ($model == null) {
             return [
