@@ -2,6 +2,7 @@
 
 namespace App\Services\Billing\Payme\Methods;
 
+use App\Models\Order;
 use App\Models\Transaction;
 use Goodoneuz\PayUz\Models\PaymentSystem;
 
@@ -10,8 +11,7 @@ class CheckPerformTransactionHandler implements PaymeMethodHandler
     public function handle(array $params): array
     {
 //        $this->validateParams($this->request->params);
-        $id = $params['id'];
-        $model = \App\Models\Transaction::where('provider_transaction_id', $id)->first();
+        $model = Order::find($params['account']['order_id']);
 
         if ($model == null) {
             return [
