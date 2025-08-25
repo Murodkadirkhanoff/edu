@@ -29,14 +29,14 @@ class CancelTransactionHandler implements PaymeMethodHandler
             ];
         }
 
-        switch ($transaction->state) {
+        switch ($transaction->provider_state) {
             case -1:
             case -2:
                 return [
                     'result' => [
                         'transaction' => (string)$transaction->id,
                         'cancel_time' => 1 * $transaction->canceled_at,
-                        'state' => 1 * $transaction->state,
+                        'state' => 1 * $transaction->provider_state,
                     ]
                 ];
 
@@ -55,7 +55,7 @@ class CancelTransactionHandler implements PaymeMethodHandler
                     'result' => [
                         'transaction' => (string)$transaction->id,
                         'cancel_time' => 1 * $transaction->canceled_at,
-                        'state' => 1 * $transaction->state,
+                        'state' => 1 * $transaction->provider_state,
                     ]
                 ];
 
@@ -75,7 +75,7 @@ class CancelTransactionHandler implements PaymeMethodHandler
                     'result' => [
                         'transaction' => (string)$transaction->id,
                         'canceled_at' => 1 * $transaction->canceled_at,
-                        'state' => 1 * $transaction->state,
+                        'state' => 1 * $transaction->provider_state,
                     ]
                 ];
 
