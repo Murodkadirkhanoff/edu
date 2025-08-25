@@ -62,7 +62,7 @@ class CancelTransactionHandler implements PaymeMethodHandler
                 break;
 
             case 2:
-                $transaction->cancel(1 * $transaction->reason);
+                $transaction->cancel(1 * $params['reason']);
 
 
                 $transaction->update([
