@@ -72,12 +72,9 @@ class CreateTransactionHandler implements PaymeMethodHandler
             // Иначе — оставляем создание доступным
 
         }else{
-            try {
-                (new CheckPerformTransactionHandler)->handle($account);
-            } catch (\Exception $e) {
-                if ($e->response->response['error'] != null) {
-                    throw $e;
-                }
+            $result =  (new CheckPerformTransactionHandler)->handle($account);
+            if (isset($result['error'])) {
+                return $result;
             }
         }
         $model = Order::find($account['order_id']);
