@@ -30,8 +30,8 @@ class CheckTransactionHandler implements PaymeMethodHandler
         return [
             'result' => [
                 'create_time' => 1 * $transaction->provider_created_at,
-                'perform_time' => 1,
-                'cancel_time' => 1,
+                'perform_time' => 0,
+                'cancel_time' => 0,
                 'transaction' => (string)$transaction->id,
                 'state' => 1 * $transaction->provider_state,
                 'reason' => null,
