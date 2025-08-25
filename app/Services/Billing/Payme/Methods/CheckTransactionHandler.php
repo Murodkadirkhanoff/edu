@@ -34,7 +34,7 @@ class CheckTransactionHandler implements PaymeMethodHandler
                 'cancel_time' => $transaction->canceled_at ?? 0,
                 'transaction' => (string)$transaction->id,
                 'state' => 1 * $transaction->provider_state,
-                'reason' => null,
+                'reason' => $transaction->reason,
             ]
         ];
     }
