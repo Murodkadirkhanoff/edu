@@ -27,7 +27,7 @@ class PerformTransactionHandler implements PaymeMethodHandler
             ];
         }
 
-        switch ($transaction->state) {
+        switch ($transaction->provider_state) {
             case 1:
                 if ($transaction->isExpired()) {
                     $transaction->cancel(4);
@@ -47,7 +47,7 @@ class PerformTransactionHandler implements PaymeMethodHandler
                 } else {
 
                     $perform_time = now()->valueOf();
-                    $transaction->state = 2;
+                    $transaction->provider_state = 2;
                     $transaction->updated_at = $perform_time;
                     $transaction->performed_at = $perform_time;
                     $transaction->update();
@@ -68,7 +68,7 @@ class PerformTransactionHandler implements PaymeMethodHandler
                     'result' => [
                         'transaction' => (string) $transaction->id,
                         'perform_time' => 1 * $transaction->performed_at,
-                        'state' => 1 * $transaction->state,
+                        'state' => 1 * $transaction->provider_state,
                     ]
                 ];
 
