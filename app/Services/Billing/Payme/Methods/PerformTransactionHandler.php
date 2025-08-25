@@ -48,7 +48,7 @@ class PerformTransactionHandler implements PaymeMethodHandler
 
                     $perform_time = now()->valueOf();
                     $transaction->provider_state = 2;
-                    $transaction->updated_at = $perform_time;
+
                     $transaction->performed_at = $perform_time;
                     $transaction->update();
 
