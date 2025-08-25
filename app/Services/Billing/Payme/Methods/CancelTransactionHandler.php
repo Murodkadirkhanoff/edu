@@ -74,7 +74,7 @@ class CancelTransactionHandler implements PaymeMethodHandler
                 return [
                     'result' => [
                         'transaction' => (string)$transaction->id,
-                        'canceled_at' => 1 * $transaction->canceled_at,
+                        'cancel_time' => 1 * $transaction->canceled_at,
                         'state' => 1 * $transaction->provider_state,
                     ]
                 ];
