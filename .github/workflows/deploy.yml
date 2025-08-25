@@ -28,7 +28,7 @@ jobs:
 
             echo "🛠 Rebuilding containers..."
             docker compose down
-            docker compose up -d --build
+            docker compose -f docker-compose.prod.yml up --build -d
 
             echo "📦 Installing composer dependencies..."
             docker exec laravel-app composer install --no-dev --optimize-autoloader
