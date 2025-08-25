@@ -57,6 +57,7 @@ class CreateTransactionHandler implements PaymeMethodHandler
         $transaction = Transaction::create([
             'provider_transaction_id' => $id,
             'user_id' => 1,
+            'order_id' => 1,
             'amount' => $amount,
             'provider_created_at' => $time,
             'provider_state' => 1,
