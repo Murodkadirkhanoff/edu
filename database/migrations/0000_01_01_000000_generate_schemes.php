@@ -16,6 +16,7 @@ return new class extends Migration {
         DB::statement('CREATE SCHEMA IF NOT EXISTS users;');
         DB::statement('CREATE SCHEMA IF NOT EXISTS media;');
         DB::statement('CREATE SCHEMA IF NOT EXISTS billings;');
+        DB::statement('CREATE SCHEMA IF NOT EXISTS orders;');
 //        DB::statement('CREATE SCHEMA IF NOT EXISTS quizzes;');
 //        DB::statement('CREATE SCHEMA IF NOT EXISTS certificates;');
 //        DB::statement('CREATE SCHEMA IF NOT EXISTS payments;');
@@ -30,6 +31,8 @@ return new class extends Migration {
         DB::statement('DROP SCHEMA IF EXISTS lessons CASCADE;');
         DB::statement('DROP SCHEMA IF EXISTS users CASCADE;');
         DB::statement('DROP SCHEMA IF EXISTS media CASCADE;');
+        DB::statement('DROP SCHEMA IF EXISTS billings CASCADE;');
+        DB::statement('DROP SCHEMA IF EXISTS orders CASCADE;');
 //        DB::statement('DROP SCHEMA IF EXISTS quizzes CASCADE;');
 //        DB::statement('DROP SCHEMA IF EXISTS certificates CASCADE;');
 //        DB::statement('DROP SCHEMA IF EXISTS payments CASCADE;');

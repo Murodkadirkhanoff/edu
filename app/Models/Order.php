@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CourseSale extends Model
+class Order extends Model
 {
-
+    public $table = 'orders.orders';
 }
