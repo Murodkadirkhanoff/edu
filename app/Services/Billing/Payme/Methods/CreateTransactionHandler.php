@@ -59,7 +59,7 @@ class CreateTransactionHandler implements PaymeMethodHandler
             'provider_created_at' => $time,
             'provider_state' => 1,
             'provider_payload' => json_encode($params),
-            'account' => json_encode($account),
+            //'account' => json_encode($account),
             'receivers' => $receivers ? json_encode($receivers) : null,
         ]);
 
