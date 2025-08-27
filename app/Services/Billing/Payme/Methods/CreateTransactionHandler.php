@@ -81,15 +81,15 @@ class CreateTransactionHandler implements PaymeMethodHandler
         // Если транзакции нет — создаём новую
         $transaction = Transaction::create([
             'provider_transaction_id' => $id,
-            'user_id' => 1,
-            'order_id' => 1,
+            'user_id' => $model->user_id,
+            'order_id' =>$model->id,
             'provider' => "payme",
             'amount' => $amount,
             'provider_created_at' => $time,
             'provider_state' => 1,
             'provider_payload' => json_encode($params),
-            'transactionable_type' => get_class($model),
-            'transactionable_id' => $model->id
+//            'transactionable_type' => get_class($model),
+//            'transactionable_id' => $model->id
             //'account' => json_encode($account),
 //            'receivers' => $receivers ? json_encode($receivers) : null,
         ]);

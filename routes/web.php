@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Common\CategoryController;
+use App\Http\Controllers\Common\CheckoutController;
 use App\Http\Controllers\Media\FileController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\VideoController;
@@ -35,6 +36,6 @@ Route::post('avatar/upload', [\App\Http\Controllers\Common\ProfileController::cl
 Route::delete('avatar/delete', [\App\Http\Controllers\Common\ProfileController::class, 'deleteAvatar'])->name('avatar.delete');
 
 Route::get('lesson/show/{lesson}', [\App\Http\Controllers\Instructor\CourseLessonController::class, 'lessonshow'])->name('lesson.show');
-
+Route::match(['get', 'post'],'/checkout/{course}', [CheckoutController::class, 'checkout'])->name('checkout');
 
 

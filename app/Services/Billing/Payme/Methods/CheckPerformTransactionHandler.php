@@ -50,7 +50,7 @@ class CheckPerformTransactionHandler implements PaymeMethodHandler
             ];
         }
 
-        $completed_transactions = $this->getComplatedTransactions($model);
+        $completed_transactions = $this->getCompletedTransactions($model);
         if ((count($completed_transactions) > 0)) {
             return [
                 "error" => [
@@ -80,17 +80,20 @@ class CheckPerformTransactionHandler implements PaymeMethodHandler
     {
         return Transaction::where('provider', 'payme')
             ->where('provider_state', 1)
-            ->where('transactionable_type', get_class($model))
-            ->where('transactionable_id', $model->id)
+//            ->where('transactionable_type', get_class($model))
+//            ->where('transactionable_id', $model->id)
+            ->where('order_id', $model->id)
+
             ->get();
     }
 
-    public function getComplatedTransactions($model)
+    public function getCompletedTransactions($model)
     {
         return Transaction::where('provider', 'payme')
             ->where('provider_state', 2)
-            ->where('transactionable_type', get_class($model))
-            ->where('transactionable_id', $model->id)
+//            ->where('transactionable_type', get_class($model))
+//            ->where('transactionable_id', $model->id)
+            ->where('order_id', $model->id)
             ->get();
     }
 }

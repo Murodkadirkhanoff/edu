@@ -19,6 +19,7 @@ class CourseController extends Controller
             $lesson = Lesson::whereHas('module', function ($q) use ($course) {
                 $q->where('course_id', $course->id);
             })
+                ->where('is_free', true)
                 ->orderBy('id')
                 ->first();
         }

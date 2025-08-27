@@ -2,58 +2,60 @@
     <section class="p-lg-5 py-7">
         <div class="container">
             <div class="row mb-8">
-                @if($lesson->isVideo())
-                    @php
-                        $streamUrl = "/lessons/{$lesson->id}/stream";
-                    @endphp
+                @isset($lesson)
+                    @if($lesson->isVideo())
+                        @php
+                            $streamUrl = "/lessons/{$lesson->id}/stream";
+                        @endphp
 
-                    <div class="card rounded-3">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5>{{ $lesson->title }}</h5>
+                        <div class="card rounded-3">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5>{{ $lesson->title }}</h5>
 
-                            @if($lesson->attachments->isNotEmpty())
-                                <div class="dropdown">
-                                    <button class="btn btn-sm btn-light dropdown-toggle" type="button"
-                                            id="attachmentsMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Бириктирилган файллар
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="attachmentsMenu">
-                                        @foreach($lesson->attachments as $file)
-                                            <li><a class="dropdown-item"
-                                                   href="{{ route('files.download', $file->id) }}">{{$file->original_name}}</a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
+                                @if($lesson->attachments->isNotEmpty())
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-light dropdown-toggle" type="button"
+                                                id="attachmentsMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Бириктирилган файллар
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="attachmentsMenu">
+                                            @foreach($lesson->attachments as $file)
+                                                <li><a class="dropdown-item"
+                                                       href="{{ route('files.download', $file->id) }}">{{$file->original_name}}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="card-body">
+                                <div style="width: 100%; max-width: 100%; aspect-ratio: 16 / 9; background-color: black;">
+                                    <video
+                                        id="video-player"
+                                        class="w-100 h-100"
+                                        style="object-fit: contain;" {{-- или 'cover' если хочешь обрезать --}}
+                                        controls
+                                        playsinline
+                                    >
+                                        <source src="{{ $streamUrl }}" type="video/mp4">
+                                        Браузер видеони кўрсатишни қўлламайди.
+                                    </video>
                                 </div>
-                            @endif
-                        </div>
-                        <div class="card-body">
-                            <div style="width: 100%; max-width: 100%; aspect-ratio: 16 / 9; background-color: black;">
-                                <video
-                                    id="video-player"
-                                    class="w-100 h-100"
-                                    style="object-fit: contain;" {{-- или 'cover' если хочешь обрезать --}}
-                                    controls
-                                    playsinline
-                                >
-                                    <source src="{{ $streamUrl }}" type="video/mp4">
-                                    Браузер видеони кўрсатишни қўлламайди.
-                                </video>
                             </div>
                         </div>
-                    </div>
 
-                @else
-                    <div class="card rounded-3">
-                        <h5 class="card-header">
-                            Дарс контенти
-                        </h5>
-                        <div class="card-body">
-                            <p>{!! $lesson->text_content !!}</p>
+                    @else
+                        <div class="card rounded-3">
+                            <h5 class="card-header">
+                                Дарс контенти
+                            </h5>
+                            <div class="card-body">
+                                <p>{!! $lesson->text_content !!}</p>
+                            </div>
                         </div>
-                    </div>
+                    @endif
+                @endisset
 
-                @endif
 
             </div>
             <!-- Content -->
@@ -118,12 +120,15 @@
                             </div>
                             <div class="d-flex justify-content-between">
                                 <div class="d-flex align-items-center">
-                                    <img src="{{$course->instructor->avatar}" class="rounded-circle avatar-md"
+                                    <img src="{{auth()->user()->avatar_url}}" class="rounded-circle avatar-md"
                                          alt="avatar"/>
                                     <div class="ms-2 lh-1">
                                         <h4 class="mb-1">{{$course->instructor->full_name}}</h4>
                                         <p class="fs-6 mb-0">{{$course->instructor->email}}</p>
                                     </div>
+                                </div>
+                                <div>
+                                    <a href="{{route('checkout', ['course' =>  $course])}}" class="btn btn-outline-secondary btn-sm">Харид қилиш</a>
                                 </div>
                             </div>
                         </div>

@@ -27,8 +27,8 @@
                                     <div class="col-lg-9 col-md-8 col-12">
                                         <div class="input-group mb-1">
                                             <span class="input-group-text bg-light"><i
-                                                    class="bi bi-twitter text-primary"></i></span>
-                                            <input type="text" value="{{auth()->user()->socialProfile->twitter_profile}}" name="twitter_profile" class="form-control"
+                                                    class="bi bi-twitter text-info"></i></span>
+                                            <input type="text" value="{{auth()->user()->socialProfile?->twitter_profile}}" name="twitter_profile" class="form-control"
                                                    placeholder="Twitter Profile Name"/>
                                         </div>
                                         <small>Twitter тармоғидаги фойдаланувчи номини киритинг</small>
@@ -42,8 +42,8 @@
                                     <div class="col-lg-9 col-md-8 col-12">
                                         <div class="input-group mb-1">
                                             <span class="input-group-text bg-light"><i
-                                                    class="bi bi-telegram text-primary"></i></span>
-                                            <input type="text" value="{{auth()->user()->socialProfile->telegram_profile}}" name="telegram_profile" class="form-control"
+                                                    class="bi bi-telegram text-info"></i></span>
+                                            <input type="text" value="{{auth()->user()->socialProfile?->telegram_profile}}" name="telegram_profile" class="form-control"
                                                    placeholder="Telegram Profile Name"/>
                                         </div>
                                         <small>Telegram тармоғидаги фойдаланувчи/гурух/канал номини киритинг</small>
@@ -58,8 +58,8 @@
                                     <div class="col-lg-9 col-md-8 col-12">
                                         <div class="input-group mb-1">
                                             <span class="input-group-text bg-light"><i
-                                                    class="bi bi-facebook text-primary"></i></span>
-                                            <input type="text" value="{{auth()->user()->socialProfile->facebook_profile}}" class="form-control" placeholder="Facebook Profile Name"
+                                                    class="bi bi-facebook text-info"></i></span>
+                                            <input type="text" value="{{auth()->user()->socialProfile?->facebook_profile}}" class="form-control" placeholder="Facebook Profile Name"
                                                    id="socialProfileFacebook" name="facebook_profile"/>
                                         </div>
                                         <small>Facebook тармоғидаги фойдаланувчи номини киритинг</small>
@@ -75,7 +75,7 @@
                                         <div class="input-group mb-1">
                                             <span class="input-group-text bg-light"><i
                                                     class="bi bi-instagram text-danger"></i></span>
-                                            <input type="text" value="{{auth()->user()->socialProfile->instagram_profile}}" class="form-control" placeholder="Instagram Profile Name"
+                                            <input type="text" value="{{auth()->user()->socialProfile?->instagram_profile}}" class="form-control" placeholder="Instagram Profile Name"
                                                    id="socialProfileInstagram" name="instagram_profile"/>
                                         </div>
                                         <small>Instagram тармоғидаги фойдаланувчи номини киритинг</small>
@@ -90,8 +90,8 @@
                                     <div class="col-lg-9 col-md-8 col-12">
                                         <div class="input-group mb-1">
                                             <span class="input-group-text bg-light"><i
-                                                    class="bi bi-linkedin text-primary"></i></span>
-                                            <input type="text" class="form-control" value="{{auth()->user()->socialProfile->linkedin_profile}}" placeholder="LinkedIn Profile URL"
+                                                    class="bi bi-linkedin text-info"></i></span>
+                                            <input type="text" class="form-control" value="{{auth()->user()->socialProfile?->linkedin_profile}}" placeholder="LinkedIn Profile URL"
                                                    id="socialProfileLinkedin" name="linkedin_profile"/>
                                         </div>
                                         <small>LinkedIn тармоғидаги профил URL манзилини киритинг (мисол учун,
@@ -108,7 +108,7 @@
                                         <div class="input-group mb-1">
                                             <span class="input-group-text bg-light"><i
                                                     class="bi bi-youtube text-danger"></i></span>
-                                            <input type="text" value="{{auth()->user()->socialProfile->youtube_profile}}" class="form-control" placeholder="YouTube URL"
+                                            <input type="text" value="{{auth()->user()->socialProfile?->youtube_profile}}" class="form-control" placeholder="YouTube URL"
                                                    id="socialProfileYoutube" name="youtube_profile"/>
                                         </div>
                                         <small>YouTube платформасидаги профил URL манзили</small>
