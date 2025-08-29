@@ -131,7 +131,7 @@
                             <!-- Submit Button -->
                             <div class="mb-4">
                                 <div class="d-grid">
-                                    <button type="submit" class="btn btn-primary" id="verifyBtn">
+                                    <button type="submit" class="btn btn-primary">
                                         <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                                         <span class="btn-text">Kodni tasdiqlash</span>
                                     </button>
@@ -180,41 +180,9 @@
     box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
 }
 
-.btn-primary {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
-}
 
-.btn-primary:hover {
-    background-color: #0b5ed7;
-    border-color: #0a58ca;
-}
 
-.btn-link {
-    color: #0d6efd;
-}
 
-.btn-link:hover {
-    color: #0b5ed7;
-}
-
-.alert {
-    border-radius: 0.5rem;
-}
-
-.card {
-    border-radius: 1rem;
-    border: none;
-}
-
-.form-label {
-    font-weight: 500;
-    color: #495057;
-}
-
-.text-muted {
-    color: #6c757d !important;
-}
 
 #otp_code {
     border: 2px solid #dee2e6;
@@ -226,12 +194,6 @@
     border-color: #0d6efd;
     transform: scale(1.02);
 }
-
-.spinner-border-sm {
-    width: 1rem;
-    height: 1rem;
-}
-
 @keyframes pulse {
     0% { opacity: 1; }
     50% { opacity: 0.5; }
