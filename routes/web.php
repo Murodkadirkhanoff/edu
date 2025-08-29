@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Billing\PurchaseController;
 use App\Http\Controllers\Common\CategoryController;
 use App\Http\Controllers\Common\CheckoutController;
 use App\Http\Controllers\Media\FileController;
@@ -39,3 +40,8 @@ Route::get('lesson/show/{lesson}', [\App\Http\Controllers\Instructor\CourseLesso
 Route::match(['get', 'post'],'/checkout/{course}', [CheckoutController::class, 'checkout'])->name('checkout');
 
 
+
+
+// Billing
+
+Route::get('purchase-history', [PurchaseController::class, 'purchaseHistory'])->name('purchase-history');

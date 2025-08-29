@@ -34,6 +34,12 @@
                            Менинг Курсларим
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('purchase-history')}}">
+                            <i class="fe fe-inbox nav-icon"></i>
+                            Тўловлар тарихи
+                        </a>
+                    </li>
 {{--                    <li class="nav-item">--}}
 {{--                        <a class="nav-link" href="../pages/instructor-reviews.html">--}}
 {{--                            <i class="fe fe-star nav-icon"></i>--}}
