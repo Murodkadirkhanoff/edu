@@ -2,6 +2,7 @@
 
 namespace App\Services\Billing\Payme\Methods;
 
+use App\Models\Order;
 use Goodoneuz\PayUz\Http\Classes\DataFormat;
 use Goodoneuz\PayUz\Http\Classes\Payme\Response;
 use Goodoneuz\PayUz\Models\Transaction;
@@ -42,8 +43,10 @@ class CancelTransactionHandler implements PaymeMethodHandler
 
             case 1:
                 $transaction->cancel(1 * $params['reason']);
-
-                $cancel_time =now()->valueOf();
+                Order::find($transaction->order_id)->update([
+                    'status' => 'cancelled'
+                ]);
+                $cancel_time = now()->valueOf();
 
                 $transaction->update([
                     'canceled_at' => $cancel_time
@@ -58,12 +61,12 @@ class CancelTransactionHandler implements PaymeMethodHandler
                         'state' => 1 * $transaction->provider_state,
                     ]
                 ];
-
-                break;
-
             case 2:
                 $transaction->cancel(1 * $params['reason']);
 
+                Order::find($transaction->order_id)->update([
+                    'status' => 'cancelled_after_paid'
+                ]);
 
                 $transaction->update([
                     'canceled_at' => now()->valueOf(),

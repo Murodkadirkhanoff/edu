@@ -4,6 +4,8 @@ namespace App\Services\Billing\Payme\Methods;
 
 
 
+use App\Models\Order;
+
 class PerformTransactionHandler implements PaymeMethodHandler
 {
 
@@ -31,7 +33,9 @@ class PerformTransactionHandler implements PaymeMethodHandler
             case 1:
                 if ($transaction->isExpired()) {
                     $transaction->cancel(4);
-
+                    Order::find($transaction->order_id)->update([
+                        'status' => 'cancelled'
+                    ]);
 
                     return [
                         "error" => [
@@ -51,7 +55,9 @@ class PerformTransactionHandler implements PaymeMethodHandler
 
                     $transaction->performed_at = $perform_time;
                     $transaction->update();
-
+                    Order::find($transaction->order_id)->update([
+                        'status' => 'paid'
+                    ]);
 //                    PaymentService::payListener(null, $transaction, 'after-pay');
 
                     return [

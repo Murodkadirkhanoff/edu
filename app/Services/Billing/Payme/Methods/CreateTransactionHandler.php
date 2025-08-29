@@ -5,8 +5,6 @@ namespace App\Services\Billing\Payme\Methods;
 use App\Models\Order;
 use App\Models\Transaction;
 use Carbon\Carbon;
-use Goodoneuz\PayUz\Http\Classes\PaymentException;
-use Illuminate\Support\Facades\Auth;
 
 class CreateTransactionHandler implements PaymeMethodHandler
 {
