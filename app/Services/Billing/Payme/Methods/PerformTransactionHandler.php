@@ -4,6 +4,7 @@ namespace App\Services\Billing\Payme\Methods;
 
 
 
+use App\Models\Enrollment;
 use App\Models\Order;
 
 class PerformTransactionHandler implements PaymeMethodHandler
@@ -57,6 +58,11 @@ class PerformTransactionHandler implements PaymeMethodHandler
                     $transaction->update();
                     Order::find($transaction->order_id)->update([
                         'status' => 'paid'
+                    ]);
+                    Enrollment::create([
+                       'user_id' => $transaction->user_id,
+                       'purchasable_type' => $transaction->order->order_items->first()->purchasable_type,
+                       'purchasable_id' => $transaction->order->order_items->first()->purchasable_id,
                     ]);
 //                    PaymentService::payListener(null, $transaction, 'after-pay');
 

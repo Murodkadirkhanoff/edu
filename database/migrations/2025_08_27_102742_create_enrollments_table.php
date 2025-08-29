@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('users.enrollments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users.users')->cascadeOnDelete();
-            $table->morphs('enrollable');
+            $table->morphs('purchasable');
 
             // purchase | free | gift | subscription
             $table->string('access_type')->default('purchase');

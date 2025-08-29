@@ -41,7 +41,7 @@
                             @empty
                                 <tr>
                                     <td colspan="6" class="text-center text-muted py-4">
-                                        🚫 Транзакция топилмади
+                                        🚫 Транзакциялар топилмади
                                     </td>
                                 </tr>
                             @endforelse

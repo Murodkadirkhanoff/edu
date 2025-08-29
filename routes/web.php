@@ -44,4 +44,5 @@ Route::match(['get', 'post'],'/checkout/{course}', [CheckoutController::class, '
 
 // Billing
 
-Route::get('purchase-history', [PurchaseController::class, 'purchaseHistory'])->name('purchase-history');
+Route::get('purchase-history', [PurchaseController::class, 'purchaseHistory'])->name('purchase-history')->middleware(['auth', 'web']);
+Route::get('my-learning', [PurchaseController::class, 'myLearning'])->name('my-learning')->middleware(['auth', 'web']);

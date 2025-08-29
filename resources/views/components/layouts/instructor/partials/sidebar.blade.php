@@ -40,6 +40,12 @@
                             Тўловлар тарихи
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('my-learning')}}">
+                            <i class="fe fe-inbox nav-icon"></i>
+                           Сотиб олинган курслар
+                        </a>
+                    </li>
 {{--                    <li class="nav-item">--}}
 {{--                        <a class="nav-link" href="../pages/instructor-reviews.html">--}}
 {{--                            <i class="fe fe-star nav-icon"></i>--}}

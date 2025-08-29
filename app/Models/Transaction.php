@@ -11,6 +11,11 @@ class Transaction extends Model
 
     public $guarded = [];
 
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+
     public function isExpired()
     {
         return ($this->provider_state == 1) && ($this->updated_at < now()->subHours(12));
