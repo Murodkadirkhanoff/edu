@@ -31,8 +31,8 @@
                             @forelse($transactions as $transaction)
                                 <tr>
                                     <td><a href="invoice-details.html">#{{$transaction->order_id}}</a></td>
-                                    <td>{{$transaction->perdormed_at}}</td>
-                                    <td>{{$transaction->amount}}</td>
+                                    <td>{{$transaction->performed_at}}</td>
+                                    <td>{{$transaction->amount}} UZS</td>
                                     <td><span class="badge bg-danger">{{$transaction->providet_state}}</span></td>
                                     <td>
                                         <a href="../assets/images/pdf/invoiceFile.pdf" class="fe fe-download" download></a>
