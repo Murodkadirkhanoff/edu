@@ -36,7 +36,7 @@
                     <div class="col-xl-3 col-md-6 col-12">
                         <!-- Card -->
                         <div class="card">
-                            <a href="#"><img src="{{ route('files.show', $course->thumbnail?->id) }}" alt="course" class="card-img-top" /></a>
+                            <a href="#"><img src="{{ route('files.show', $learning->thumbnail?->id) }}" alt="course" class="card-img-top" /></a>
                             <!-- Card body -->
                             <div class="card-body d-flex flex-column gap-3">
                                 <h3 class="h4 mb-0"><a href="#" class="text-inherit">{{$learning->purchasable->title}}</a></h3>
