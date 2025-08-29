@@ -31,7 +31,7 @@
                             @forelse($transactions as $transaction)
                                 <tr>
                                     <td><a href="invoice-details.html">#{{$transaction->order_id}}</a></td>
-                                    <td> {{Carbon::createFromTimestampMs($transaction->performed_at)->format('Y-m-d H:i:s') }} </td>
+                                    <td> {{\Carbon\Carbon::createFromTimestampMs($transaction->performed_at)->format('Y-m-d H:i:s') }} </td>
                                     <td>{{$transaction->amount}} UZS</td>
                                     <td><span class="badge bg-danger">{{$transaction->providet_state}}</span></td>
                                     <td>
